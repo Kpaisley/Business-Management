@@ -1,8 +1,11 @@
+using BusinessManagement.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<BusinessManagementContext>();
 
 var app = builder.Build();
 
