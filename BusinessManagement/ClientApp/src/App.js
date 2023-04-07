@@ -1,13 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import { Layout } from './components/Layout';
+import { useAuth0 } from '@auth0/auth0-react';
 import './custom.css';
 
-export default class App extends Component {
-  static displayName = App.name;
+const App = () => {
+    const { isLoading } = useAuth0();
 
-  render() {
+    if (isLoading) {
+        return (
+            <div className="loader"></div>
+        );
+    }
+
     return (
       <Layout>
         <Routes>
@@ -18,5 +24,6 @@ export default class App extends Component {
         </Routes>
       </Layout>
     );
-  }
 }
+
+export default App;
