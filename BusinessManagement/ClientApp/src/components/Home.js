@@ -1,39 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import './Home.css';
+import { Dashboard } from './Dashboard';
 
-export const Home = () => {
-    const { isAuthenticated, user } = useAuth0();
-    const [products, setProducts] = useState([]);
-    const [departments, setDepartments] = useState([]);
-    const [employees, setEmployees] = useState([]);
+export const Home = (props) => {
+    const { isAuthenticated } = useAuth0();
 
-    async function populateProducts() {
-        //CALL PRODUCTS API HERE AND SET PRODUCTS TO RESULT
-        console.log('Populating Products')
-    }
-    async function populateDepartments() {
-        //CALL DEPARTMENTS API HERE AND SET DEPARTMENTS TO RESULT
-        console.log('Populating Departments')
-    }
-    async function populateEmployees(deptID) {
-        //CALL EMPLOYEES API HERE PASSING THE deptID AS A PARAMETER TO RETURN EACH EMPLOYEE FROM EACH DEPT AND PUSH IT TO THE EMPLOYEE ARRAY.
-        console.log('Populating Employees')
-    }
+    
+
+    
 
 
-    //POPULATE DEPARTMENTS, EMPLOYEES && PRODUCTS
-    useEffect(() => {
-        if (isAuthenticated) {
-            populateProducts().then(populateDepartments()).then(() => { 
-                for (let i = 0; i < departments.length; i++) {
-                    var deptID = departments[i].departmentId;
-                    populateEmployees(deptID);
-                    //POPULATE EMPLOYEES BASED OFF OF THE DEPARTMENT ID'S RETURNED.
-                }
-            })
-        }
-    }, [])
+    
+
+    
 
 
 
@@ -69,20 +49,6 @@ export const Home = () => {
 
     //RETURN USER DASHBOARD IF AUTHENTICATED
     return isAuthenticated && (
-      <div>
-            <h1>Welcome! Below is your account information...</h1>
-            <p>{JSON.stringify(user, null, 2)}</p>
-            <br />
-            <br />
-            <p>
-                Products: {products.length}
-            </p>
-            <p>
-                Departments: {departments.length}
-            </p>
-            <p>
-                Employees: {employees.length}
-            </p>
-      </div>
+      <Dashboard products={props.products} productsLoading={props.productsLoading} departments={props.departments} departmentsLoading={props.departmentsLoading} employees={props.employees} employeesLoading={props.employeesLoading} />
     );
 }

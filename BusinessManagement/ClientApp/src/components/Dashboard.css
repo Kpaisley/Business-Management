@@ -1,0 +1,18 @@
+﻿.dashboard {
+    border: 2px solid;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.info-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.info-box {
+    border: 2px solid;
+    width: 275px;
+    margin: 20px;
+}
