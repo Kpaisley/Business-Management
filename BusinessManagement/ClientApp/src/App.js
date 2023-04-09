@@ -26,11 +26,14 @@ const App = () => {
         const data = await response.json();
         setProducts(data);
         setProductsLoading(false);
-
     }
+
+    //POPULATE DEPARTMENTS USING DepartmentsController.cs
     async function populateDepartments(companyID) {
-        //CALL DEPARTMENTS API HERE AND SET DEPARTMENTS TO RESULT
-        console.log('Populating Departments...')
+        const response = await fetch('departments/' + companyID)
+        const data = await response.json();
+        setDepartments(data);
+        setDepartmentsLoading(false);
     }
     async function populateEmployees(deptID) {
         //CALL EMPLOYEES API HERE PASSING THE deptID AS A PARAMETER TO RETURN EACH EMPLOYEE FROM EACH DEPT AND PUSH IT TO THE EMPLOYEE ARRAY.
@@ -45,6 +48,7 @@ const App = () => {
     useEffect(() => {
         if (isAuthenticated) {
             populateProducts(user.sub).then(populateDepartments(user.sub));
+            
 
 
 
@@ -57,6 +61,8 @@ const App = () => {
             //})
         }
     }, [isAuthenticated])
+
+    
 
     
     
