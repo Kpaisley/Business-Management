@@ -6,6 +6,7 @@ import './custom.css';
 import { Home } from './components/Home';
 import { Counter } from './components/Counter';
 import { FetchData } from './components/FetchData';
+import { Product } from './components/Product';
 
 const App = () => {
     const { isLoading, isAuthenticated, user } = useAuth0();
@@ -28,37 +29,39 @@ const App = () => {
         setProductsLoading(false);
     }
 
-    //POPULATE DEPARTMENTS USING DepartmentsController.cs
+    //POPULATE DEPARTMENTS BY COMPANYID USING DepartmentsController.cs
     async function populateDepartments(companyID) {
         const response = await fetch('departments/' + companyID)
         const data = await response.json();
         setDepartments(data);
         setDepartmentsLoading(false);
+        
     }
-    async function populateEmployees(deptID) {
-        //CALL EMPLOYEES API HERE PASSING THE deptID AS A PARAMETER TO RETURN EACH EMPLOYEE FROM EACH DEPT AND PUSH IT TO THE EMPLOYEE ARRAY.
-        console.log('Populating Employees')
+    async function populateEmployees(companyID) {
+        //CALL DEPARTMENTS API TO RETREIVE ALL DEPARTMENTS LINKED TO USERS companyID, THEN PUSH TO EMPLOYEES FROM EACH DEPARTMENT.
+        const response = await fetch('departments/' + companyID)
+        const data = await response.json();
+        for (let i = 0; i < data.length; i++) {
+            let departmentID = data[i].departmentId;
+            let res = await fetch('employees/' + departmentID);
+            let data2 = await res.json();
+            for (let x = 0; x < data2.length; x++) {
+                setEmployees(employees => [...employees, data2[x]])
+            }
+        }
+        setEmployeesLoading(false);
+        
+        
     }
 
 
    
     
 
-    //POPULATE DEPARTMENTS, EMPLOYEES && PRODUCTS
+    //POPULATE DEPARTMENTS, EMPLOYEES && PRODUCTS ONCE A USER IS LOGGED IN & AUTHENTICATED
     useEffect(() => {
         if (isAuthenticated) {
-            populateProducts(user.sub).then(populateDepartments(user.sub));
-            
-
-
-
-            //populateProducts().then(populateDepartments()).then(() => { 
-            //    for (let i = 0; i < departments.length; i++) {
-            //        var deptID = departments[i].departmentId;
-            //        populateEmployees(deptID);
-            //        //POPULATE EMPLOYEES BASED OFF OF THE DEPARTMENT ID'S RETURNED.
-            //    }
-            //})
+            populateProducts(user.sub).then(populateDepartments(user.sub)).then(populateEmployees(user.sub));
         }
     }, [isAuthenticated])
 
@@ -79,8 +82,9 @@ const App = () => {
       <Layout>
         <Routes>
                 <Route index="true" element={<Home products={products} productsLoading={productsLoading} departments={departments} departmentsLoading={departmentsLoading} employees={employees} employeesLoading={employeesLoading} />} />
-                <Route path="/counter" element={<Counter />} />
+                <Route path="/counter" element={<Counter employees={employees} />} />
                 <Route path="/fetch-data" element={<FetchData />} />
+                <Route path="/product" element={<Product products={products} />} />
         </Routes>
       </Layout>
     );

@@ -25,6 +25,9 @@ export const NavMenu = (props) => {
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!collapsed} navbar>
             <ul className="navbar-nav flex-grow">
               <NavItem hidden={!isAuthenticated}>
+                <NavLink tag={Link} className="text-dark" to="/product">Products</NavLink>
+              </NavItem>
+              <NavItem hidden={!isAuthenticated}>
                 <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
               </NavItem>
               <NavItem hidden={!isAuthenticated}>
