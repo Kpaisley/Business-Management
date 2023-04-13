@@ -38,7 +38,7 @@ const App = () => {
         
     }
     async function populateEmployees(companyID) {
-        //CALL DEPARTMENTS API TO RETREIVE ALL DEPARTMENTS LINKED TO USERS companyID, THEN PUSH TO EMPLOYEES FROM EACH DEPARTMENT.
+        //CALL DEPARTMENTS API TO RETREIVE ALL DEPARTMENTS LINKED TO USERS companyID, THEN PUSH TO Employees ARRAY FROM EACH DEPARTMENT.
         const response = await fetch('departments/' + companyID)
         const data = await response.json();
         for (let i = 0; i < data.length; i++) {

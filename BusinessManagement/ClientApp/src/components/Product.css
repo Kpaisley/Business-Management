@@ -1,1 +1,29 @@
 ﻿
+
+.product-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border: 3px solid gray;
+}
+
+.product-page h3 {
+    margin: 10px 0 25px 0;
+}
+
+.product-page h5 {
+    text-align: left;
+    margin: 15px 0 0 0;
+}
+
+.product-desc {
+    justify-content: center;
+}
+
+.product-desc tr {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 4px solid gray;
+    margin-bottom: 7px;
+}

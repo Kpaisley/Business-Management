@@ -1,0 +1,19 @@
+﻿
+.product-item {
+    margin: 25px 0 0 0;
+}
+
+.product-item tr {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    border-bottom: 2px solid gray;
+}
+
+.product-item td {
+    width: 33%;
+    margin: auto;
+    border: 2px solid pink;
+}
+
+
