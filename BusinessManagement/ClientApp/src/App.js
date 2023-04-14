@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { useAuth0 } from '@auth0/auth0-react';
-import './custom.css';
 import { Home } from './components/Home';
 import { Counter } from './components/Counter';
 import { FetchData } from './components/FetchData';
 import { Product } from './components/Product';
+import axios from 'axios';
+import './custom.css';
 
 const App = () => {
     const { isLoading, isAuthenticated, user } = useAuth0();
@@ -21,6 +22,16 @@ const App = () => {
     const [employeesLoading, setEmployeesLoading] = useState(true);
 
 
+    function changeQty(productId, num) {
+        var increment;
+        if (num == 1) {
+            increment = true;
+        } else
+            increment = false;
+        changeProductQty(productId, increment);
+    }
+
+
     //POPULATE PRODUCTS USING ProductsController.cs
     async function populateProducts(companyID) {
         const response = await fetch('products/' + companyID);
@@ -28,6 +39,27 @@ const App = () => {
         setProducts(data);
         setProductsLoading(false);
     }
+
+    //INCREMENT OR DECREMENT THE QUANTITY OF A PRODUCT
+    async function changeProductQty(productId, increment) {
+
+        const productToChange = {
+            companyId: user.sub,
+            productId: productId,
+            increment: increment
+        }
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(productToChange)
+        }
+
+        const response = await fetch('/products', requestOptions);
+        const data = await response.json();
+        setProducts(data);
+    }
+
 
     //POPULATE DEPARTMENTS BY COMPANYID USING DepartmentsController.cs
     async function populateDepartments(companyID) {
@@ -37,8 +69,9 @@ const App = () => {
         setDepartmentsLoading(false);
         
     }
+
+    //POPULATE EMPLOYEES BY CALLING EACH DEPARTMENT FROM THE CompanyID AND THEN RETRIEVING EACH EMPLOYEE BY IT'S DepartmentId
     async function populateEmployees(companyID) {
-        //CALL DEPARTMENTS API TO RETREIVE ALL DEPARTMENTS LINKED TO USERS companyID, THEN PUSH TO Employees ARRAY FROM EACH DEPARTMENT.
         const response = await fetch('departments/' + companyID)
         const data = await response.json();
         for (let i = 0; i < data.length; i++) {
@@ -50,9 +83,8 @@ const App = () => {
             }
         }
         setEmployeesLoading(false);
-        
-        
     }
+
 
 
    
@@ -64,9 +96,6 @@ const App = () => {
             populateProducts(user.sub).then(populateDepartments(user.sub)).then(populateEmployees(user.sub));
         }
     }, [isAuthenticated])
-
-    
-
     
     
 
@@ -84,7 +113,7 @@ const App = () => {
                 <Route index="true" element={<Home products={products} productsLoading={productsLoading} departments={departments} departmentsLoading={departmentsLoading} employees={employees} employeesLoading={employeesLoading} />} />
                 <Route path="/counter" element={<Counter employees={employees} />} />
                 <Route path="/fetch-data" element={<FetchData />} />
-                <Route path="/product" element={<Product products={products} />} />
+                <Route path="/product" element={<Product products={products} changeQty={changeQty} />} />
         </Routes>
       </Layout>
     );

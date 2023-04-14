@@ -20,6 +20,16 @@ export const Product = (props) => {
         window.location.href = "";
     }
 
+    if (props.products.length <= 0) {
+        return (
+            <div className="product-page">
+                <h3>It looks like you dont have any products stored. Add one below!</h3>
+                <h5>Total Products: {props.products.length}</h5>
+                <h5>Total Quantity: {getTotalQty()}</h5>
+            </div>
+            )
+    }
+
     return isAuthenticated && (
         <div className="product-page">
             <h3>Browse your products below!</h3>
@@ -34,9 +44,9 @@ export const Product = (props) => {
             </table>
             
             {props.products.map((product) => {
-                console.log(product);
                 return (
-                    <ProductItem key={product.productId} productName={product.productName} unitPrice={product.unitPrice} unitsInStock={product.unitsInStock} />
+                    <ProductItem key={product.productId} productId={product.productId} productName={product.productName} unitPrice={product.unitPrice}
+                        unitsInStock={product.unitsInStock} changeQty={props.changeQty} />
                 )
             })}
             <h5>Total Products: {props.products.length}</h5>

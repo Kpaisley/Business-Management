@@ -1,19 +1,63 @@
 ﻿
 .product-item {
-    margin: 25px 0 0 0;
+    margin: 20px 0 0 0;
 }
 
 .product-item tr {
     display: flex;
     justify-content: space-between;
     text-align: center;
-    border-bottom: 2px solid gray;
+}
+
+.product-item tr:last-child {
+     border-bottom: 2px solid gray;
+     margin-top: 5px;
 }
 
 .product-item td {
     width: 33%;
     margin: auto;
-    border: 2px solid pink;
 }
 
+.qty-btns {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+
+/*ANIMATIONS*/
+
+.pulse-hover {
+    transition: transform .2s;
+}
+
+    .pulse-hover:hover {
+        transform: scale(1.3);
+        cursor: pointer;
+    }
+
+.shake-hover:hover {
+    cursor: pointer;
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    perspective: 1000px;
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(1px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(1px, 0, 0);
+    }
+}
 

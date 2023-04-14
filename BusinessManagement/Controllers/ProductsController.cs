@@ -1,4 +1,5 @@
 ﻿using BusinessManagement.Data;
+using BusinessManagement.Data.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -35,8 +36,28 @@ namespace BusinessManagement.Controllers
 
         // POST api/<ProductsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IEnumerable<Product> Post([FromBody] ChangeProductQuantityDTO value)
         {
+            var productToChange = _context.Products.FirstOrDefault(p => p.CompanyId == value.companyId && p.ProductId == value.productId);
+            var increment = value.increment;
+
+            if (productToChange != null)
+            {
+                if (increment == true)
+                {
+                    productToChange.UnitsInStock++;
+                    _context.SaveChanges();
+                }
+                else if (increment == false && productToChange.UnitsInStock > 1)
+                {
+                    productToChange.UnitsInStock--;
+                    _context.SaveChanges();
+                }
+            }
+            var products = _context.Products.ToList();
+            return products;
+           
+
         }
 
         // PUT api/<ProductsController>/5
