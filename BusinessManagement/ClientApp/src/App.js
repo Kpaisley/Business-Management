@@ -22,27 +22,26 @@ const App = () => {
     const [employeesLoading, setEmployeesLoading] = useState(true);
 
 
-    function changeQty(productId, num) {
-        var increment;
-        if (num == 1) {
-            increment = true;
-        } else
-            increment = false;
-        changeProductQty(productId, increment);
-    }
 
-
-    //POPULATE PRODUCTS USING ProductsController.cs
-    async function populateProducts(companyID) {
-        const response = await fetch('products/' + companyID);
+    //DELETE A PRODUCT BY ID
+    async function deleteById(productId) {
+        const productToDelete = {
+            companyId: user.sub,
+            productId: productId
+        }
+        
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(productToDelete)
+        }
+        const response = await fetch('/products', requestOptions);
         const data = await response.json();
         setProducts(data);
-        setProductsLoading(false);
     }
 
-    //INCREMENT OR DECREMENT THE QUANTITY OF A PRODUCT
-    async function changeProductQty(productId, increment) {
-
+    //INCREMENT OR DECREMENT QUANTITY OF A PRODUCT
+    async function changeQty(productId, increment) {
         const productToChange = {
             companyId: user.sub,
             productId: productId,
@@ -60,6 +59,13 @@ const App = () => {
         setProducts(data);
     }
 
+    //POPULATE PRODUCTS USING ProductsController.cs
+    async function populateProducts(companyID) {
+        const response = await fetch('products/' + companyID);
+        const data = await response.json();
+        setProducts(data);
+        setProductsLoading(false);
+    }
 
     //POPULATE DEPARTMENTS BY COMPANYID USING DepartmentsController.cs
     async function populateDepartments(companyID) {
@@ -113,7 +119,7 @@ const App = () => {
                 <Route index="true" element={<Home products={products} productsLoading={productsLoading} departments={departments} departmentsLoading={departmentsLoading} employees={employees} employeesLoading={employeesLoading} />} />
                 <Route path="/counter" element={<Counter employees={employees} />} />
                 <Route path="/fetch-data" element={<FetchData />} />
-                <Route path="/product" element={<Product products={products} changeQty={changeQty} />} />
+                <Route path="/product" element={<Product products={products} changeQty={changeQty} deleteById={deleteById} />} />
         </Routes>
       </Layout>
     );

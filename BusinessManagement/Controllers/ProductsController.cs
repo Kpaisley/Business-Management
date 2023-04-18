@@ -67,9 +67,17 @@ namespace BusinessManagement.Controllers
         }
 
         // DELETE api/<ProductsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public IEnumerable<Product> Delete([FromBody] DeleteProductDTO product)
         {
+            var productToDelete = _context.Products.FirstOrDefault(p => p.CompanyId.Equals(product.companyId) && p.ProductId == product.productId);
+            if (productToDelete != null)
+            {
+                _context.Products.Remove(productToDelete);
+                _context.SaveChanges();
+            }
+            var products = _context.Products.ToList();
+            return products;
         }
     }
 }

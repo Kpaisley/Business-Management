@@ -1,5 +1,7 @@
 ﻿import React from "react";
 import { useAuth0 } from '@auth0/auth0-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import './Product.css';
 import { ProductItem } from "./ProductItem";
 
@@ -33,6 +35,7 @@ export const Product = (props) => {
     return isAuthenticated && (
         <div className="product-page">
             <h3>Browse your products below!</h3>
+            <span className="add-product-btn pulse-hover"  ><span><FontAwesomeIcon icon={faPlus} /></span>Create</span>
             <table className="product-desc">
                 <thead>
                     <tr>
@@ -46,7 +49,7 @@ export const Product = (props) => {
             {props.products.map((product) => {
                 return (
                     <ProductItem key={product.productId} productId={product.productId} productName={product.productName} unitPrice={product.unitPrice}
-                        unitsInStock={product.unitsInStock} changeQty={props.changeQty} />
+                        unitsInStock={product.unitsInStock} changeQty={props.changeQty} deleteById={props.deleteById} />
                 )
             })}
             <h5>Total Products: {props.products.length}</h5>
