@@ -1,4 +1,4 @@
-﻿import React from "react";
+﻿import React, { useState } from "react";
 import { useAuth0 } from '@auth0/auth0-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
@@ -7,6 +7,7 @@ import { ProductItem } from "./ProductItem";
 
 export const Product = (props) => {
     const { isAuthenticated } = useAuth0();
+    const [productToEdit, setProductToEdit] = useState({});
 
     function getTotalQty() {
         var total = 0;
@@ -16,19 +17,32 @@ export const Product = (props) => {
         return total;
     }
 
-    function displayModal() {
-        var modal = document.getElementById('add-product-modal');
+    function addProduct() {
+        var addModal = document.getElementById('add-product-modal');
+        var editModal = document.getElementById('edit-product-modal');
         var msg = document.getElementById('add-product-msg');
-        modal.style.left = '25vw';
+        editModal.style.left = '-100%';
+        addModal.style.left = '25vw';
         msg.innerHTML = "";
         
     }
 
     function closeModal() {
-        var modal = document.getElementById('add-product-modal');
-        modal.style.left = '-100%';
+        var addModal = document.getElementById('add-product-modal');
+        var editModal = document.getElementById('edit-product-modal');
+        editModal.style.left = "-100%";
+        addModal.style.left = '-100%';
     }
 
+    function editProduct(product) {
+        setProductToEdit(product);
+        var editModal = document.getElementById('edit-product-modal');
+        var addModal = document.getElementById('add-product-modal');
+        var msg = document.getElementById('edit-product-msg');
+        addModal.style.left = '-100%';
+        editModal.style.left = '25vw';
+        msg.innerHTML = "";
+    }
 
 
 
@@ -69,8 +83,9 @@ export const Product = (props) => {
 
             <div id="add-product-modal" >
                 <span className="close-modal-btn" onClick={() => closeModal()}><FontAwesomeIcon icon={faXmark} className="pulse-hover" /></span>
+                <br />
                 <h3><u>Add a Product!</u></h3>
-                
+               
                 <div id="modal-content" className="modal-content">
                     <form onSubmit={(e) => props.addProduct(e)}>
                         <label htmlFor="product-name"><strong>Product Name *</strong></label>
@@ -87,10 +102,32 @@ export const Product = (props) => {
                 </div>
             </div>
 
+            <div id="edit-product-modal">
+                <span className="close-modal-btn" onClick={() => closeModal()}><FontAwesomeIcon icon={faXmark} className="pulse-hover" /></span>
+                <br />
+                <h3><u>{productToEdit.productName}</u></h3>
+
+                <div id="modal-content" className="modal-content">
+                    <form onSubmit={(e) => props.modifyProduct(productToEdit.productId, e) }>
+                        <label htmlFor="product-name"><strong>Product Name *</strong></label>
+                        <input className="product-input" type="text" name="product-name" placeholder={productToEdit.productName} maxLength="49" ></input>
+
+                        <label htmlFor="unit-price"><strong>Unit Price *</strong></label>
+                        <input className="product-input" type="number" min=".01" step=".01" name="unit-price" placeholder={productToEdit.unitPrice}  ></input>
+
+                        <label htmlFor="units-in-stock"><strong>Units in Stock *</strong></label>
+                        <input className="product-input" type="number" min="1" name="units-in-stock" placeholder={productToEdit.unitsInStock} ></input>
+                        
+                        <input className="submit-btn" type="submit" value="Continue"></input>
+                        <span id="edit-product-msg"></span>
+                    </form>
+                </div>
+            </div>
+
 
 
             <h3>Browse your products below!</h3>
-            <span className="add-product-btn pulse-hover" onClick={() => displayModal() }  ><span><FontAwesomeIcon icon={faPlus} /></span>Create</span>
+            <span className="add-product-btn pulse-hover" onClick={() => addProduct() }  ><span><FontAwesomeIcon icon={faPlus} /></span>Create</span>
             <table className="product-desc">
                 <thead>
                     <tr>
@@ -103,8 +140,7 @@ export const Product = (props) => {
             
             {props.products.map((product) => {
                 return (
-                    <ProductItem key={product.productId} productId={product.productId} productName={product.productName} unitPrice={product.unitPrice}
-                        unitsInStock={product.unitsInStock} changeQty={props.changeQty} deleteById={props.deleteById} />
+                    <ProductItem key={product.productId} product={product} changeQty={props.changeQty} deleteById={props.deleteById} editProduct={editProduct} />
                 )
             })}
             <h5>Total Products: {props.products.length}</h5>

@@ -17,15 +17,7 @@ namespace BusinessManagement.Controllers
             _context = context;
         }
 
-
-
-        // GET: api/<ProductsController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
+        //RETURN A USER'S PRODUCTS
         // GET api/<ProductsController>/5
         [HttpGet("{companyID}")]
         public IEnumerable<Product> Get(string companyID)
@@ -34,9 +26,25 @@ namespace BusinessManagement.Controllers
             return products;
         }
 
+
+        //ADD A PRODUCT
         // POST api/<ProductsController>
         [HttpPost]
-        public IEnumerable<Product> Post([FromBody] ChangeProductQuantityDTO value)
+        public IEnumerable<Product> Post([FromBody] AddProductDTO value)
+        {
+            Product productToAdd = new Product { CompanyId = value.companyId, ProductName = value.productName, UnitPrice = value.unitPrice, UnitsInStock = value.unitsInStock };
+            _context.Products.Add(productToAdd);
+            _context.SaveChanges();
+
+            var products = _context.Products.ToList().Where(p => p.CompanyId.Equals(value.companyId)).ToList();
+            return products;
+        }
+
+        
+        //INCREMENT OR DECREMENT PRODUCT QUANTITY
+        // PUT api/<ProductsController>/5
+        [HttpPut]
+        public IEnumerable<Product> Put([FromBody] ChangeProductQuantityDTO value)
         {
             var productToChange = _context.Products.FirstOrDefault(p => p.CompanyId.Equals(value.companyId) && p.ProductId == value.productId);
             var increment = value.increment;
@@ -56,22 +64,28 @@ namespace BusinessManagement.Controllers
             }
             var products = _context.Products.Where(p => p.CompanyId.Equals(value.companyId));
             return products;
-           
-
         }
 
-        // PUT api/<ProductsController>/5
-        [HttpPut]
-        public IEnumerable<Product> Put([FromBody] AddProductDTO value)
+        //MODIFY A PRODUCT
+        [HttpPut("{companyId}")]
+        public IEnumerable<Product> Put(string companyId, [FromBody] ModifyProductDTO value)
         {
-            Product productToAdd = new Product { CompanyId = value.companyId, ProductName = value.productName, UnitPrice = value.unitPrice, UnitsInStock = value.unitsInStock};
-            _context.Products.Add(productToAdd);
-            _context.SaveChanges();
+            var productToModify = _context.Products.FirstOrDefault(p => p.ProductId == value.productId && p.CompanyId.Equals(companyId));
 
-            var products = _context.Products.ToList().Where(p => p.CompanyId.Equals(value.companyId)).ToList();
+            if (productToModify != null)
+            {
+                productToModify.ProductName = value.productName;
+                productToModify.UnitPrice = value.unitPrice;
+                productToModify.UnitsInStock = value.unitsInStock;
+                _context.SaveChanges();
+            }
+
+            var products = _context.Products.Where(p => p.CompanyId.Equals(companyId)).ToList();
             return products;
         }
 
+
+        //DELETE A PRODUCT
         // DELETE api/<ProductsController>/5
         [HttpDelete]
         public IEnumerable<Product> Delete([FromBody] DeleteProductDTO product)

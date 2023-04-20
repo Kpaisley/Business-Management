@@ -22,7 +22,6 @@ const App = () => {
     const [employeesLoading, setEmployeesLoading] = useState(true);
 
     //ADD A PRODUCT
-
     async function addProduct(e) {
         e.preventDefault();
         var msg = document.getElementById('add-product-msg');
@@ -49,7 +48,7 @@ const App = () => {
                 unitsInStock: unitsInStock
             }
             const requestOptions = {
-                method: 'PUT',
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(productToAdd)
             }
@@ -58,6 +57,52 @@ const App = () => {
             setProducts(data);
             msg.style.color = "limeGreen";
             msg.innerHTML = "Product Added!"
+            for (let i = 0; i < 3; i++) {
+                e.target[i].value = "";
+            }
+        }
+    }
+
+    //MODIFY AN EXISTING PRODUCT
+    async function modifyProduct(productId, e) {
+        e.preventDefault();
+        var msg = document.getElementById('edit-product-msg');
+        var productName = e.target[0].value;
+        var unitPrice = e.target[1].value;
+        var unitsInStock = e.target[2].value;
+
+        msg.style.color = "#635dff"
+        msg.innerHTML = "Modifying Product..."
+
+
+        if (!productName || !unitPrice || !unitsInStock) {
+            msg.style.color = "red";
+            msg.innerHTML = "Please ensure all fields are filled out."
+        } else if (unitPrice > 10000000 || unitPrice < 1) {
+            msg.style.color = "red";
+            msg.innerHTML = "Unit Price must be between $1.00 - $10,000,000.00"
+        } else if (unitsInStock > 10000 || unitsInStock < 1) {
+            msg.style.color = 'red';
+            msg.innerHTML = "Units in stock must be between 1 - 10,000."
+        } else {
+            
+            const productToEdit = {
+                productId: productId,
+                productName: productName,
+                unitPrice: unitPrice,
+                unitsInStock: unitsInStock
+            }
+            const requestOptions = {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(productToEdit)
+            }
+
+            const response = await fetch('/products/'+ user.sub, requestOptions);
+            const data = await response.json();
+            setProducts(data);
+            msg.style.color = "limeGreen";
+            msg.innerHTML = "Modified Successfully!"
             for (let i = 0; i < 3; i++) {
                 e.target[i].value = "";
             }
@@ -90,7 +135,7 @@ const App = () => {
         }
 
         const requestOptions = {
-            method: 'POST',
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(productToChange)
         }
@@ -160,7 +205,7 @@ const App = () => {
                 <Route index="true" element={<Home products={products} productsLoading={productsLoading} departments={departments} departmentsLoading={departmentsLoading} employees={employees} employeesLoading={employeesLoading} />} />
                 <Route path="/counter" element={<Counter employees={employees} />} />
                 <Route path="/fetch-data" element={<FetchData />} />
-                <Route path="/product" element={<Product products={products} changeQty={changeQty} deleteById={deleteById} addProduct={addProduct} />} />
+                <Route path="/product" element={<Product products={products} changeQty={changeQty} deleteById={deleteById} addProduct={addProduct} modifyProduct={modifyProduct} />} />
         </Routes>
       </Layout>
     );
