@@ -9,10 +9,10 @@
     text-align: center;
 }
 
-.product-item tr:last-child {
-     border-bottom: 2px solid gray;
-     margin-top: 5px;
-}
+    .product-item tr:last-child {
+        border-bottom: 2px solid #635dff;
+        margin-top: 5px;
+    }
 
 .product-item td {
     width: 33%;

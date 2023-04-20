@@ -38,7 +38,7 @@ namespace BusinessManagement.Controllers
         [HttpPost]
         public IEnumerable<Product> Post([FromBody] ChangeProductQuantityDTO value)
         {
-            var productToChange = _context.Products.FirstOrDefault(p => p.CompanyId == value.companyId && p.ProductId == value.productId);
+            var productToChange = _context.Products.FirstOrDefault(p => p.CompanyId.Equals(value.companyId) && p.ProductId == value.productId);
             var increment = value.increment;
 
             if (productToChange != null)
@@ -54,16 +54,22 @@ namespace BusinessManagement.Controllers
                     _context.SaveChanges();
                 }
             }
-            var products = _context.Products.ToList();
+            var products = _context.Products.Where(p => p.CompanyId.Equals(value.companyId));
             return products;
            
 
         }
 
         // PUT api/<ProductsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public IEnumerable<Product> Put([FromBody] AddProductDTO value)
         {
+            Product productToAdd = new Product { CompanyId = value.companyId, ProductName = value.productName, UnitPrice = value.unitPrice, UnitsInStock = value.unitsInStock};
+            _context.Products.Add(productToAdd);
+            _context.SaveChanges();
+
+            var products = _context.Products.ToList().Where(p => p.CompanyId.Equals(value.companyId)).ToList();
+            return products;
         }
 
         // DELETE api/<ProductsController>/5
@@ -76,7 +82,7 @@ namespace BusinessManagement.Controllers
                 _context.Products.Remove(productToDelete);
                 _context.SaveChanges();
             }
-            var products = _context.Products.ToList();
+            var products = _context.Products.Where(p => p.CompanyId.Equals(product.companyId));
             return products;
         }
     }

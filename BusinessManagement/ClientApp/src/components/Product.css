@@ -5,11 +5,11 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    border: 3px solid gray;
 }
 
-.product-page h3 {
+.product-page h4 {
     margin: 10px 0 25px 0;
+    color: #635dff;
 }
 
 .product-page h5 {
@@ -24,8 +24,17 @@
 .product-desc tr {
     display: flex;
     justify-content: space-around;
-    border-bottom: 4px solid gray;
     margin-bottom: 7px;
+}
+
+.add-product-form {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 25px;
+    margin: 30px 0 0 0;
+    color: #635dff;
+    box-shadow: 6px 6px 40px 0px rgba(128,125,128,1);
 }
 
 .add-product-btn {
@@ -46,4 +55,63 @@
     padding: 0 6px 0 6px;
     float: left;
     
+}
+
+#add-product-modal {
+    position: absolute;
+    background-color: white;
+    bottom: 8vh;
+    width: 60vw;
+    transition: left 2s;
+    left: -100%;
+    border-radius: 10px;
+    padding: 25px;
+    color: #635dff;
+    box-shadow: 6px 6px 40px 0px rgba(128,125,128,1)
+}
+
+#add-product-modal h3 {
+    margin: 20px 0 40px 0;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-input {
+    margin: 0 auto 15px auto;
+    max-width: 75%;
+    width: 400px;
+    border-radius: 7px;  
+    text-align: center;
+}
+
+.product-input:hover {
+    background-color: lightgray;
+}
+
+.product-input:focus {
+    outline: none;
+}
+
+.submit-btn {
+    margin: auto;
+    width: auto;
+}
+
+.close-modal-btn {
+    float: right;
+    width: 50px;
+    cursor: pointer;
+    font-size: x-large;
+    color: red;
+}
+
+#add-product-msg {
+    margin: 10px;
+}
+
+.float-right {
+    float: right;
 }
