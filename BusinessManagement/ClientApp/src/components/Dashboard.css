@@ -1,8 +1,11 @@
 ﻿.dashboard {
-    border: 2px solid;
     display: flex;
     flex-direction: column;
     text-align: center;
+}
+
+.dashboard h5 {
+    margin: 0 0 75px 0;
 }
 
 .info-boxes {
@@ -12,7 +15,49 @@
 }
 
 .info-box {
-    border: 2px solid;
+    border-radius: 15px;
     width: 275px;
     margin: 20px;
+    min-height: 350px;
+    box-shadow: 6px 6px 40px 0px rgba(128,125,128,1);
+    cursor: pointer;
+    padding: 20px;
 }
+
+.info-box:hover p {
+    text-decoration: underline;
+}
+
+.info-box h3 {
+    color: #635dff;
+    margin: 0 0 100px 0;
+}
+
+.user-totals {
+    color: #635dff;
+    font-size: xx-large;
+    margin-bottom: 100px;
+}
+
+.dashboard-links {
+    text-decoration: none;
+    color: black;
+}
+
+.dashboard-links:hover {
+    text-decoration: none;
+    color: black;
+}
+
+
+
+/*ANIMATIONS*/
+
+.pulse-hover-sm {
+    transition: transform .2s;
+}
+
+    .pulse-hover-sm:hover {
+        transform: scale(1.05);
+    }
+

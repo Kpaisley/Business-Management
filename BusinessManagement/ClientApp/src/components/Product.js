@@ -7,7 +7,6 @@ import { ProductItem } from "./ProductItem";
 
 export const Product = (props) => {
     const { isAuthenticated } = useAuth0();
-    const [productToEdit, setProductToEdit] = useState({});
 
     function getTotalQty() {
         var total = 0;
@@ -35,7 +34,7 @@ export const Product = (props) => {
     }
 
     function editProduct(product) {
-        setProductToEdit(product);
+        props.setProductToEdit(product);
         var editModal = document.getElementById('edit-product-modal');
         var addModal = document.getElementById('add-product-modal');
         var msg = document.getElementById('edit-product-msg');
@@ -48,6 +47,12 @@ export const Product = (props) => {
 
     if (!isAuthenticated) {
         window.location.href = "";
+    }
+
+    else if (props.productsLoading) {
+        return (
+            <div className="loader"></div>
+        )
     }
 
     else if (props.products.length <= 0) {
@@ -105,18 +110,18 @@ export const Product = (props) => {
             <div id="edit-product-modal">
                 <span className="close-modal-btn" onClick={() => closeModal()}><FontAwesomeIcon icon={faXmark} className="pulse-hover" /></span>
                 <br />
-                <h3><u>{productToEdit.productName}</u></h3>
+                <h3><u>{props.productToEdit.productName}</u></h3>
 
                 <div id="modal-content" className="modal-content">
-                    <form onSubmit={(e) => props.modifyProduct(productToEdit.productId, e) }>
+                    <form onSubmit={(e) => props.modifyProduct(props.productToEdit.productId, e) }>
                         <label htmlFor="product-name"><strong>Product Name *</strong></label>
-                        <input className="product-input" type="text" name="product-name" placeholder={productToEdit.productName} maxLength="49" ></input>
+                        <input className="product-input" type="text" name="product-name" placeholder={props.productToEdit.productName} maxLength="49" ></input>
 
                         <label htmlFor="unit-price"><strong>Unit Price *</strong></label>
-                        <input className="product-input" type="number" min=".01" step=".01" name="unit-price" placeholder={productToEdit.unitPrice}  ></input>
+                        <input className="product-input" type="number" min=".01" step=".01" name="unit-price" placeholder={props.productToEdit.unitPrice}  ></input>
 
                         <label htmlFor="units-in-stock"><strong>Units in Stock *</strong></label>
-                        <input className="product-input" type="number" min="1" name="units-in-stock" placeholder={productToEdit.unitsInStock} ></input>
+                        <input className="product-input" type="number" min="1" name="units-in-stock" placeholder={props.productToEdit.unitsInStock} ></input>
                         
                         <input className="submit-btn" type="submit" value="Continue"></input>
                         <span id="edit-product-msg"></span>

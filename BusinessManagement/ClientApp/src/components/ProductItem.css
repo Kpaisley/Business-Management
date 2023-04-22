@@ -1,19 +1,29 @@
 ﻿
 
 .product-item {
-    margin: 20px 0 0 0;
+    border-radius: 20px;
+}
+
+.product-item:nth-child(2n+2) {
+    background-color: #e8e8e8;
+}
+
+.product-item:last-of-type {
+    border-bottom: 3px solid #635dff;
 }
 
 .product-item tr {
     display: flex;
     justify-content: space-between;
     text-align: center;
+
 }
 
-    .product-item tr:last-child {
-        border-bottom: 2px solid #635dff;
-        margin-top: 5px;
-    }
+.product-item tr:last-child {
+    margin-top: 5px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
 
 .product-item td {
     width: 33%;
@@ -32,10 +42,10 @@
     transition: transform .2s;
 }
 
-    .pulse-hover:hover {
-        transform: scale(1.2);
-        cursor: pointer;
-    }
+.pulse-hover:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
 
 .shake-hover:hover {
     cursor: pointer;

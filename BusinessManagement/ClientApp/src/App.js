@@ -21,6 +21,12 @@ const App = () => {
     const [employees, setEmployees] = useState([]);
     const [employeesLoading, setEmployeesLoading] = useState(true);
 
+    const [productToEdit, setProductToEdit] = useState({});
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////// ** PRODUCT CONTROLLER FUNCTIONS ** \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     //ADD A PRODUCT
     async function addProduct(e) {
         e.preventDefault();
@@ -103,6 +109,7 @@ const App = () => {
             setProducts(data);
             msg.style.color = "limeGreen";
             msg.innerHTML = "Modified Successfully!"
+            setProductToEdit(productToEdit);
             for (let i = 0; i < 3; i++) {
                 e.target[i].value = "";
             }
@@ -153,6 +160,9 @@ const App = () => {
         setProductsLoading(false);
     }
 
+
+
+    //////////////////////////////////////////////////////////////////////////// ** DEPARTMENT CONTROLLER FUNCTIONS ** \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     //POPULATE DEPARTMENTS BY COMPANYID USING DepartmentsController.cs
     async function populateDepartments(companyID) {
         const response = await fetch('departments/' + companyID)
@@ -162,6 +172,8 @@ const App = () => {
         
     }
 
+
+    //////////////////////////////////////////////////////////////////////////// ** EMPLOYEE CONTROLLER FUNCTIONS ** \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     //POPULATE EMPLOYEES BY CALLING EACH DEPARTMENT FROM THE CompanyID AND THEN RETRIEVING EACH EMPLOYEE BY IT'S DepartmentId
     async function populateEmployees(companyID) {
         const response = await fetch('departments/' + companyID)
@@ -179,8 +191,6 @@ const App = () => {
 
 
 
-   
-    
 
     //POPULATE DEPARTMENTS, EMPLOYEES && PRODUCTS ONCE A USER IS LOGGED IN & AUTHENTICATED
     useEffect(() => {
@@ -202,10 +212,15 @@ const App = () => {
     return (
       <Layout>
         <Routes>
-                <Route index="true" element={<Home products={products} productsLoading={productsLoading} departments={departments} departmentsLoading={departmentsLoading} employees={employees} employeesLoading={employeesLoading} />} />
+                <Route index="true" element={<Home products={products} productsLoading={productsLoading} departments={departments} departmentsLoading={departmentsLoading} employees={employees}
+                    employeesLoading={employeesLoading} />} />
+
                 <Route path="/counter" element={<Counter employees={employees} />} />
+
                 <Route path="/fetch-data" element={<FetchData />} />
-                <Route path="/product" element={<Product products={products} changeQty={changeQty} deleteById={deleteById} addProduct={addProduct} modifyProduct={modifyProduct} />} />
+
+                <Route path="/product" element={<Product products={products} productsLoading={productsLoading} changeQty={changeQty} deleteById={deleteById} addProduct={addProduct} modifyProduct={modifyProduct}
+                    productToEdit={productToEdit} setProductToEdit={setProductToEdit} />} />
         </Routes>
       </Layout>
     );

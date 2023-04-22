@@ -12,6 +12,11 @@ export const ProductItem = (props) => {
             <table className="product-item">
                 <tbody>
                     <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
                         <td>{props.product.productName}</td>
                         <td>${props.product.unitPrice}</td>
                         <td className="qty-btns">
