@@ -8,6 +8,7 @@ import { FetchData } from './components/FetchData';
 import { Product } from './components/Product';
 import axios from 'axios'; //*REMOVE AXIOS FROM PROJECT*\\
 import './custom.css';
+import { Department } from './components/Department';
 
 const App = () => {
     const { isLoading, isAuthenticated, user } = useAuth0();
@@ -185,6 +186,7 @@ const App = () => {
             for (let x = 0; x < data2.length; x++) {
                 setEmployees(employees => [...employees, data2[x]])
             }
+            
         }
         setEmployeesLoading(false);
     }
@@ -221,6 +223,8 @@ const App = () => {
 
                 <Route path="/product" element={<Product products={products} productsLoading={productsLoading} changeQty={changeQty} deleteById={deleteById} addProduct={addProduct} modifyProduct={modifyProduct}
                     productToEdit={productToEdit} setProductToEdit={setProductToEdit} />} />
+
+                <Route path="/department" element={<Department departments={departments} departmentsLoading={departmentsLoading} employees={employees} employeesLoading={employeesLoading} /> } />
         </Routes>
       </Layout>
     );

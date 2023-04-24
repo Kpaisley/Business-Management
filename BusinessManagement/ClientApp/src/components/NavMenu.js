@@ -28,6 +28,9 @@ export const NavMenu = (props) => {
                 <NavLink tag={Link} className="text-dark" to="/product">Products</NavLink>
               </NavItem>
               <NavItem hidden={!isAuthenticated}>
+                <NavLink tag={Link} className="text-dark" to="/department">Departments</NavLink>
+              </NavItem>
+              <NavItem hidden={!isAuthenticated}>
                 <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
               </NavItem>
               <NavItem hidden={!isAuthenticated}>

@@ -47,7 +47,7 @@ public partial class BusinessManagementContext : DbContext
             entity.HasKey(e => e.EmployeeId).HasName("PK__Employee__7AD04FF1B81B532D");
 
             entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
-            entity.Property(e => e.DeparmentId).HasColumnName("DeparmentID");
+            entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
             entity.Property(e => e.FirstName)
                 .HasMaxLength(25)
                 .IsUnicode(false);
@@ -61,8 +61,8 @@ public partial class BusinessManagementContext : DbContext
                 .HasMaxLength(30)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.Deparment).WithMany(p => p.Employees)
-                .HasForeignKey(d => d.DeparmentId)
+            entity.HasOne(d => d.Department).WithMany(p => p.Employees)
+                .HasForeignKey(d => d.DepartmentId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Employees__Depar__276EDEB3");
         });

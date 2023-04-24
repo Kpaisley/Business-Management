@@ -7,7 +7,7 @@ public partial class Employee
 {
     public int EmployeeId { get; set; }
 
-    public int DeparmentId { get; set; }
+    public int DepartmentId { get; set; }
 
     public string FirstName { get; set; } = null!;
 
@@ -17,5 +17,5 @@ public partial class Employee
 
     public string Salary { get; set; } = null!;
 
-    public virtual Department Deparment { get; set; } = null!;
+    public virtual Department Department { get; set; } = null!;
 }

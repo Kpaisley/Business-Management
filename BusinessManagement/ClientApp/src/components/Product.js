@@ -49,7 +49,7 @@ export const Product = (props) => {
         window.location.href = "";
     }
 
-    else if (props.productsLoading) {
+    else if (isAuthenticated && props.productsLoading) {
         return (
             <div className="loader"></div>
         )
@@ -132,7 +132,7 @@ export const Product = (props) => {
 
 
             <h3>Browse your products below!</h3>
-            <span className="add-product-btn pulse-hover" onClick={() => addProduct() }  ><span><FontAwesomeIcon icon={faPlus} /></span>Create</span>
+            <span className="create-btn pulse-hover" onClick={() => addProduct() }  ><span><FontAwesomeIcon icon={faPlus} /></span>Create</span>
             <table className="product-desc">
                 <thead>
                     <tr>

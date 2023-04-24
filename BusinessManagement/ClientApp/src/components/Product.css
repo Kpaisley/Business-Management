@@ -19,7 +19,6 @@
 }
 
 .product-desc {
-    justify-content: center;
     margin-bottom: 30px;
 }
 
@@ -39,25 +38,7 @@
     box-shadow: 6px 6px 40px 0px rgba(128,125,128,1);
 }
 
-.add-product-btn {
-    color: white;
-    background-color: #635dff;
-    width: 100px;
-    font-weight: 600;
-    margin: 0 20px 25px auto;
-    cursor: pointer;
-    border-radius: 20px;
-    padding: 5px;
-}
 
-.add-product-btn span {
-    background-color: white;
-    color: #635dff;
-    border-radius: 20px;
-    padding: 0 6px 0 6px;
-    float: left;
-    
-}
 
 #add-product-modal {
     position: absolute;

@@ -28,7 +28,7 @@ namespace BusinessManagement.Controllers
         [HttpGet("{departmentID}")]
         public IEnumerable<Employee> Get(int departmentID)
         {
-            var employees = _context.Employees.Where(e => e.DeparmentId == departmentID).ToList();
+            var employees = _context.Employees.Where(e => e.DepartmentId == departmentID).ToList();
             return employees;
         }
 

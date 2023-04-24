@@ -33,6 +33,65 @@ code {
     margin: 30vh auto 0 auto;
 }
 
+.create-btn {
+    color: white;
+    background-color: #635dff;
+    width: 100px;
+    font-weight: 600;
+    margin: 0 20px 25px auto;
+    cursor: pointer;
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.create-btn span {
+    background-color: white;
+    color: #635dff;
+    border-radius: 20px;
+    padding: 0 6px 0 6px;
+    float: left;
+    
+}
+
+
+
+/*ANIMATIONS*/
+
+.pulse-hover {
+    transition: transform .2s;
+}
+
+.pulse-hover:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.shake-hover:hover {
+    cursor: pointer;
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    perspective: 1000px;
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(1px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(1px, 0, 0);
+    }
+}
+
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);
