@@ -1,8 +1,8 @@
-﻿import React, { useEffect, useState } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
+﻿import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping, faBuilding, faUsers } from '@fortawesome/free-solid-svg-icons';
 import './Dashboard.css';
 import { Link } from 'react-router-dom';
-import NavItem from '../../../../../../../node_modules/react-bootstrap/esm/NavItem';
 
 export const Dashboard = (props) => {
     
@@ -17,7 +17,8 @@ export const Dashboard = (props) => {
 
                 <Link className="dashboard-links" to="/product">
                     <div className="info-box pulse-hover-sm">
-                        <h3><u>Products</u></h3>
+                        <h3>Products</h3>
+                        <FontAwesomeIcon className="dashboard-icons" icon={faCartShopping} size="7x" />
                         <div className="user-totals">{props.productsLoading ? <span className="inline-loader"><span className="loader-box"></span><span className="loader-box"></span><span className="loader-box"></span></span>
                             : props.products.length}
                         </div>
@@ -28,7 +29,8 @@ export const Dashboard = (props) => {
                 
 
                 <div className="info-box pulse-hover-sm">
-                    <h3><u>Departments</u></h3>
+                    <h3>Departments</h3>
+                    <FontAwesomeIcon className="dashboard-icons" icon={faBuilding} size="7x" />
                     <div className="user-totals">
                         {props.departmentsLoading ? <span className="inline-loader"><span className="loader-box"></span><span className="loader-box"></span><span className="loader-box"></span></span>
                             : props.departments.length}
@@ -37,7 +39,8 @@ export const Dashboard = (props) => {
                 </div>
 
                 <div className="info-box pulse-hover-sm">
-                    <h3><u>Employees</u></h3>
+                    <h3>Employees</h3>
+                    <FontAwesomeIcon className="dashboard-icons" icon={faUsers} size="7x" />
                     <div className="user-totals">
                         {props.employeesLoading ? <span className="inline-loader"><span className="loader-box"></span><span className="loader-box"></span><span className="loader-box"></span></span>
                             : props.employees.length}

@@ -26,17 +26,19 @@
 
 .info-box:hover p {
     text-decoration: underline;
+    color: #635dff;
 }
 
 .info-box h3 {
-    color: #635dff;
+    color: #595959;
     margin: 0 0 100px 0;
 }
 
 .user-totals {
     color: #635dff;
     font-size: xx-large;
-    margin-bottom: 100px;
+    font-weight: 600;
+    
 }
 
 .dashboard-links {
@@ -47,6 +49,11 @@
 .dashboard-links:hover {
     text-decoration: none;
     color: black;
+}
+
+.dashboard-icons {
+    margin: 0 0 75px 0;
+    color: mediumblue;
 }
 
 
