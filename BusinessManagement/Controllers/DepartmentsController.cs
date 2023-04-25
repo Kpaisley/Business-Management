@@ -53,9 +53,36 @@ namespace BusinessManagement.Controllers
         }
 
         // DELETE api/<DepartmentsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public IEnumerable<Department> Delete([FromBody] DeleteDepartmentDTO department)
         {
+            var departmentToDelete = _context.Departments.FirstOrDefault(d => d.CompanyId.Equals(department.companyId) && d.DepartmentId == department.departmentId);
+            var employeesToDelete = _context.Employees.Where(e => e.DepartmentId == department.departmentId).ToList();
+            
+
+            if (departmentToDelete != null)
+            {
+
+                if (employeesToDelete.Count > 0)
+                {
+                    for (int i = 0; i < employeesToDelete.Count; i++)
+                    {
+                        _context.Employees.Remove(employeesToDelete[i]);
+                    }
+                }
+
+                _context.Departments.Remove(departmentToDelete);
+                _context.SaveChanges();
+
+            }
+
+            var departments = _context.Departments.Where(d => d.CompanyId.Equals(department.companyId)).ToList();
+            return departments;
+
+            
+
+
+
         }
     }
 }

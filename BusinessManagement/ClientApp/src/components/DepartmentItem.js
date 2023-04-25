@@ -32,7 +32,7 @@ export const DepartmentItem = (props) => {
                     <tr>
                         <td>
                             <FontAwesomeIcon className="pulse-hover dept-btns" icon={faPen} color="#635dff" />
-                            <FontAwesomeIcon className="shake-hover dept-btns" icon={faTrash} color="red" />
+                            <FontAwesomeIcon className="shake-hover dept-btns" icon={faTrash} color="red" onClick={() => props.deleteDepartment(props.department) } />
                         </td>
                         <td></td>
                     </tr>

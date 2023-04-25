@@ -207,6 +207,33 @@ const App = () => {
         }
     }
 
+    //DELETE A DEPARTMENT
+    async function deleteDepartment(department) {
+        if (window.confirm('Deleting a deparment will result in deleting all employees in the department. Do you want to continue?') == true) {
+            try {
+                const departmentToDelete = {
+                    departmentId: department.departmentId,
+                    companyId: user.sub
+                }
+
+                const requestOptions = {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(departmentToDelete)
+                }
+
+                const response = await fetch('/departments', requestOptions);
+                const data = await response.json();
+
+                setDepartments(data);
+                populateEmployees(user.sub);
+            }
+            catch { 
+                console.log("Something went wrong...");
+            }
+        }
+    }
+
     //POPULATE DEPARTMENTS BY COMPANYID USING DepartmentsController.cs
     async function populateDepartments(companyID) {
         const response = await fetch('departments/' + companyID)
@@ -220,6 +247,7 @@ const App = () => {
     //////////////////////////////////////////////////////////////////////////// ** EMPLOYEE CONTROLLER FUNCTIONS ** \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     //POPULATE EMPLOYEES BY CALLING EACH DEPARTMENT FROM THE CompanyID AND THEN RETRIEVING EACH EMPLOYEE BY IT'S DepartmentId
     async function populateEmployees(companyID) {
+        setEmployees([]);
         const response = await fetch('departments/' + companyID)
         const data = await response.json();
         for (let i = 0; i < data.length; i++) {
@@ -268,7 +296,7 @@ const App = () => {
                     addProduct={addProduct} modifyProduct={modifyProduct} productToEdit={productToEdit} setProductToEdit={setProductToEdit} />} />
 
                 <Route path="/department" element={<Department departments={departments} departmentsLoading={departmentsLoading} employees={employees} employeesLoading={employeesLoading}
-                    addDepartment={addDepartment} />} />
+                    addDepartment={addDepartment} deleteDepartment={deleteDepartment} />} />
         </Routes>
       </Layout>
     );

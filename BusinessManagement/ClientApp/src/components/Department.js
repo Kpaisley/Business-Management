@@ -21,7 +21,9 @@ export const Department = (props) => {
 
     function closeModal() {
         var addModal = document.getElementById('add-department-modal');
+        var deleteModal = document.getElementById('delete-department-modal');
         addModal.style.left = '-100%';
+        deleteModal.style.left = '-100%';
     }
 
 
@@ -43,16 +45,14 @@ export const Department = (props) => {
             <div className="department-page">
                 <h3>It looks like you dont have any departments stored.</h3>
 
-
-
                 <h4><u>Add a Department Below!</u></h4>
 
-
-                <form>
-                    
+                <form className="add-department-form" onSubmit={(e) => props.addDepartment(e)} >
+                    <label htmlFor="department-name"><strong>Department Name *</strong></label>
+                    <input className="department-input" type="text" name="department-name" placeholder="Information Technology" maxLength="29" ></input>
+                    <input className="submit-btn" type="submit" value="Add Department"></input>
+                    <span id="add-department-msg"></span>
                 </form>
-
-
             </div>
         )
     }
@@ -74,13 +74,15 @@ export const Department = (props) => {
                 <div className="department-modal-content">
                     <form onSubmit={(e) => props.addDepartment(e)}>
                         <label htmlFor="department-name"><strong>Department Name *</strong></label>
-                        <input className="product-input" type="text" name="product-name" placeholder="Information Technology" maxLength="30" ></input>
+                        <input className="department-input" type="text" name="department-name" placeholder="Information Technology" maxLength="30" ></input>
 
                         <input className="submit-btn" type="submit" value="Add Department"></input>
                         <span id="add-department-msg"></span>
                     </form>
                 </div>
             </div>
+
+            
 
 
             
@@ -97,7 +99,7 @@ export const Department = (props) => {
             </table>
             {props.departments.map((department) => {
                 return (
-                    <DepartmentItem key={department.departmentId} department={department} employees={props.employees} />
+                    <DepartmentItem key={department.departmentId} department={department} employees={props.employees} deleteDepartment={props.deleteDepartment} />
                 )
             })}
             <h5>Total Departments: {props.departments.length}</h5>

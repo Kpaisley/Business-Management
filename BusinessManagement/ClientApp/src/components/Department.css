@@ -47,7 +47,35 @@
     flex-direction: column;
 }
 
-#add-department-modal h3 {
+#add-department-modal h3, #delete-department-modal h3 {
     margin: 20px 0 40px 0;
     font-weight: 600;
 }
+
+.department-input {
+    margin: 0 auto 15px auto;
+    max-width: 75%;
+    width: 400px;
+    border-radius: 7px;
+    text-align: center;
+}
+
+.department-input:hover {
+    background-color: lightgray;
+}
+
+.department-input:focus {
+    outline: none;
+}
+
+.add-department-form {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 25px;
+    margin: 30px 0 0 0;
+    color: #635dff;
+    box-shadow: 6px 6px 40px 0px rgba(128,125,128,1);
+}
+
+
