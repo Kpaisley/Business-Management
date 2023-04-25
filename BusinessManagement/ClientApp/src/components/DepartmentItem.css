@@ -29,3 +29,14 @@
     margin: auto;
 }
 
+.dept-btns {
+    margin: 0 20px 0 20px;
+}
+
+
+@media only screen and (max-width: 400px) {
+    .dept-btns {
+        margin: 0 10px 0 10px;
+    }
+}
+

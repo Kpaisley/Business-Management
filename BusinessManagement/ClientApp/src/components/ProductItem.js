@@ -17,11 +17,11 @@ export const ProductItem = (props) => {
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
-                        <td>{props.product.productName}</td>
-                        <td>${props.product.unitPrice}</td>
+                        <td><strong>{props.product.productName}</strong></td>
+                        <td><strong>${props.product.unitPrice}</strong></td>
                         <td className="qty-btns">
                             <FontAwesomeIcon style={{ marginTop: '4px' }} className="pulse-hover" icon={faPlus} color="#635dff" width="25px" onClick={() => props.changeQty(props.product.productId, true)} />
-                            <span className="prevent-select">{props.product.unitsInStock}</span>
+                            <span className="prevent-select"><strong>{props.product.unitsInStock}</strong></span>
                             <FontAwesomeIcon style={{ marginTop: '4px' }} className="pulse-hover" icon={faMinus} color="#635dff" width="25px" onClick={() => props.changeQty(props.product.productId, false)} />
                         </td>
                     </tr>

@@ -164,6 +164,49 @@ const App = () => {
 
 
     //////////////////////////////////////////////////////////////////////////// ** DEPARTMENT CONTROLLER FUNCTIONS ** \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    //ADD A DEPARTMENT
+    async function addDepartment(e) {
+        e.preventDefault();
+        var msg = document.getElementById('add-department-msg');
+        msg.style.color = "#635dff"
+        msg.innerHTML = "Creating Department...";
+        var departmentName = e.target[0].value;
+
+        if (departmentName.length > 30 || !departmentName) {
+            msg.style.color = "red";
+            msg.innerHTML = "Department Name must be between 1 - 30 characters."
+        }
+        else {
+            try {
+                const departmentToAdd = {
+                    companyId: user.sub,
+                    departmentName: departmentName
+                }
+
+                const requestOptions = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(departmentToAdd)
+                }
+                const response = await fetch("/departments", requestOptions);
+                const data = await response.json();
+
+                setDepartments(data);
+                msg.style.color = "limeGreen";
+                msg.innerHTML = "Department Added!"
+                
+                e.target[0].value = "";
+                
+                
+            }
+            catch {
+                msg.style.color = "red";
+                msg.innerHTML = "Something went wrong...";
+            }
+        }
+    }
+
     //POPULATE DEPARTMENTS BY COMPANYID USING DepartmentsController.cs
     async function populateDepartments(companyID) {
         const response = await fetch('departments/' + companyID)
@@ -221,10 +264,11 @@ const App = () => {
 
                 <Route path="/fetch-data" element={<FetchData />} />
 
-                <Route path="/product" element={<Product products={products} productsLoading={productsLoading} changeQty={changeQty} deleteById={deleteById} addProduct={addProduct} modifyProduct={modifyProduct}
-                    productToEdit={productToEdit} setProductToEdit={setProductToEdit} />} />
+                <Route path="/product" element={<Product products={products} productsLoading={productsLoading} changeQty={changeQty} deleteById={deleteById}
+                    addProduct={addProduct} modifyProduct={modifyProduct} productToEdit={productToEdit} setProductToEdit={setProductToEdit} />} />
 
-                <Route path="/department" element={<Department departments={departments} departmentsLoading={departmentsLoading} employees={employees} employeesLoading={employeesLoading} /> } />
+                <Route path="/department" element={<Department departments={departments} departmentsLoading={departmentsLoading} employees={employees} employeesLoading={employeesLoading}
+                    addDepartment={addDepartment} />} />
         </Routes>
       </Layout>
     );

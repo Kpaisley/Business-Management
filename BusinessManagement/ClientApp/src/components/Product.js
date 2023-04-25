@@ -55,7 +55,7 @@ export const Product = (props) => {
         )
     }
 
-    else if (props.products.length <= 0) {
+    else if (isAuthenticated && props.products.length <= 0) {
         return (
             <div className="product-page">
                 <h3>It looks like you dont have any products stored.</h3>
@@ -91,7 +91,7 @@ export const Product = (props) => {
                 <br />
                 <h3><u>Add a Product!</u></h3>
                
-                <div id="modal-content" className="modal-content">
+                <div className="product-modal-content">
                     <form onSubmit={(e) => props.addProduct(e)}>
                         <label htmlFor="product-name"><strong>Product Name *</strong></label>
                         <input className="product-input" type="text" name="product-name" placeholder="Baseball Cap" maxLength="49" ></input>
@@ -112,7 +112,7 @@ export const Product = (props) => {
                 <br />
                 <h3><u>{props.productToEdit.productName}</u></h3>
 
-                <div id="modal-content" className="modal-content">
+                <div className="product-modal-content">
                     <form onSubmit={(e) => props.modifyProduct(props.productToEdit.productId, e) }>
                         <label htmlFor="product-name"><strong>Product Name *</strong></label>
                         <input className="product-input" type="text" name="product-name" placeholder={props.productToEdit.productName} maxLength="49" ></input>

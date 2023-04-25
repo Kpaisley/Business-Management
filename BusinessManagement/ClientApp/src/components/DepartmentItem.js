@@ -1,4 +1,6 @@
 ﻿import React from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
 import './DepartmentItem.css';
 
 
@@ -15,7 +17,6 @@ export const DepartmentItem = (props) => {
         return count;
     }
 
-
     return (
         <>
             <table className="department-item">
@@ -25,8 +26,15 @@ export const DepartmentItem = (props) => {
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
-                        <td>{props.department.departmentName}</td>
-                        <td>{employeeCount()}</td>
+                        <td><strong>{props.department.departmentName}</strong></td>
+                        <td><strong>{employeeCount()}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <FontAwesomeIcon className="pulse-hover dept-btns" icon={faPen} color="#635dff" />
+                            <FontAwesomeIcon className="shake-hover dept-btns" icon={faTrash} color="red" />
+                        </td>
+                        <td></td>
                     </tr>
                     
                 </tbody>

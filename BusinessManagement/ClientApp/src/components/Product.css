@@ -73,7 +73,7 @@
     z-index: 5;
 }
 
-.modal-content form {
+.product-modal-content form {
     display: flex;
     flex-direction: column;
 }

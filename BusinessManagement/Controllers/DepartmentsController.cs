@@ -1,4 +1,5 @@
 ﻿using BusinessManagement.Data;
+using BusinessManagement.Data.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -32,10 +33,17 @@ namespace BusinessManagement.Controllers
             return departments;
         }
 
+        //ADD A DEPARTMENT
         // POST api/<DepartmentsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IEnumerable<Department> Post([FromBody] AddDepartmentDTO department)
         {
+            Department departmentToAdd = new Department { CompanyId = department.companyId, DepartmentName = department.departmentName };
+            _context.Departments.Add(departmentToAdd);
+            _context.SaveChanges();
+
+            var departments = _context.Departments.Where(d => d.CompanyId.Equals(department.companyId)).ToList();
+            return departments;
         }
 
         // PUT api/<DepartmentsController>/5
