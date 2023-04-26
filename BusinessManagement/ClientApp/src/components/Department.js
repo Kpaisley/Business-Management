@@ -21,9 +21,7 @@ export const Department = (props) => {
 
     function closeModal() {
         var addModal = document.getElementById('add-department-modal');
-        var deleteModal = document.getElementById('delete-department-modal');
         addModal.style.left = '-100%';
-        deleteModal.style.left = '-100%';
     }
 
 

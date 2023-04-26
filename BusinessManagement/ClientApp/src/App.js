@@ -48,25 +48,32 @@ const App = () => {
             msg.style.color = 'red';
             msg.innerHTML = "Units in stock must be between 1 - 10,000."
         } else {
-            const productToAdd = {
-                companyId: user.sub,
-                productName: productName,
-                unitPrice: unitPrice,
-                unitsInStock: unitsInStock
-            }
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(productToAdd)
-            }
-            const response = await fetch("/products", requestOptions);
-            const data = await response.json();
-            setProducts(data);
-            msg.style.color = "limeGreen";
-            msg.innerHTML = "Product Added!"
-            for (let i = 0; i < 3; i++) {
-                e.target[i].value = "";
-            }
+                try {
+                    const productToAdd = {
+                        companyId: user.sub,
+                        productName: productName,
+                        unitPrice: unitPrice,
+                        unitsInStock: unitsInStock
+                    }
+                    const requestOptions = {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(productToAdd)
+                    }
+                    const response = await fetch("/products", requestOptions);
+                    const data = await response.json();
+                    setProducts(data);
+                    msg.style.color = "limeGreen";
+                    msg.innerHTML = "Product Added!"
+                    for (let i = 0; i < 3; i++) {
+                        e.target[i].value = "";
+                    }
+                } catch {
+                    msg.style.color = "red";
+                    msg.innerHTML = "Something went wrong...";
+                    console.log('Failed to add a product.')
+                }
+            
         }
     }
 
@@ -92,73 +99,91 @@ const App = () => {
             msg.style.color = 'red';
             msg.innerHTML = "Units in stock must be between 1 - 10,000."
         } else {
-            
-            const productToEdit = {
-                productId: productId,
-                productName: productName,
-                unitPrice: unitPrice,
-                unitsInStock: unitsInStock
-            }
-            const requestOptions = {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(productToEdit)
-            }
+            try {
+                const productToEdit = {
+                    productId: productId,
+                    productName: productName,
+                    unitPrice: unitPrice,
+                    unitsInStock: unitsInStock
+                }
+                const requestOptions = {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(productToEdit)
+                }
 
-            const response = await fetch('/products/'+ user.sub, requestOptions);
-            const data = await response.json();
-            setProducts(data);
-            msg.style.color = "limeGreen";
-            msg.innerHTML = "Modified Successfully!"
-            setProductToEdit(productToEdit);
-            for (let i = 0; i < 3; i++) {
-                e.target[i].value = "";
-            }
+                const response = await fetch('/products/' + user.sub, requestOptions);
+                const data = await response.json();
+                setProducts(data);
+                msg.style.color = "limeGreen";
+                msg.innerHTML = "Modified Successfully!"
+                setProductToEdit(productToEdit);
+                for (let i = 0; i < 3; i++) {
+                    e.target[i].value = "";
+                }
+            } catch {
+                msg.style.color = "red";
+                msg.innerHTML = "Something went wrong...";
+                console.log('Failed to modify a product.')
+                }
+            
         }
     }
 
     //DELETE A PRODUCT BY ID
     async function deleteById(productId) {
-        const productToDelete = {
-            companyId: user.sub,
-            productId: productId
+        try {
+            const productToDelete = {
+                companyId: user.sub,
+                productId: productId
+            }
+
+            const requestOptions = {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(productToDelete)
+            }
+            const response = await fetch('/products', requestOptions);
+            const data = await response.json();
+            setProducts(data);
+        } catch {
+            console.log('Failed to delete a product.')
         }
-        
-        const requestOptions = {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(productToDelete)
-        }
-        const response = await fetch('/products', requestOptions);
-        const data = await response.json();
-        setProducts(data);
     }
 
     //INCREMENT OR DECREMENT QUANTITY OF A PRODUCT
     async function changeQty(productId, increment) {
-        const productToChange = {
-            companyId: user.sub,
-            productId: productId,
-            increment: increment
-        }
+        try {
+            const productToChange = {
+                companyId: user.sub,
+                productId: productId,
+                increment: increment
+            }
 
-        const requestOptions = {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(productToChange)
-        }
+            const requestOptions = {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(productToChange)
+            }
 
-        const response = await fetch('/products', requestOptions);
-        const data = await response.json();
-        setProducts(data);
+            const response = await fetch('/products', requestOptions);
+            const data = await response.json();
+            setProducts(data);
+        } catch {
+            console.log('Failed to increment/decrement a product.')
+        }
     }
 
     //POPULATE PRODUCTS USING ProductsController.cs
     async function populateProducts(companyID) {
-        const response = await fetch('products/' + companyID);
-        const data = await response.json();
-        setProducts(data);
-        setProductsLoading(false);
+        try {
+            const response = await fetch('products/' + companyID);
+            const data = await response.json();
+            setProducts(data);
+            setProductsLoading(false);
+        } catch {
+            console.log('Failed to populate products.')
+        }
     }
 
 
@@ -236,10 +261,14 @@ const App = () => {
 
     //POPULATE DEPARTMENTS BY COMPANYID USING DepartmentsController.cs
     async function populateDepartments(companyID) {
-        const response = await fetch('departments/' + companyID)
-        const data = await response.json();
-        setDepartments(data);
-        setDepartmentsLoading(false);
+        try {
+            const response = await fetch('departments/' + companyID)
+            const data = await response.json();
+            setDepartments(data);
+            setDepartmentsLoading(false);
+        } catch {
+            console.log('Failed to populate departments.')
+        }
         
     }
 
@@ -248,18 +277,22 @@ const App = () => {
     //POPULATE EMPLOYEES BY CALLING EACH DEPARTMENT FROM THE CompanyID AND THEN RETRIEVING EACH EMPLOYEE BY IT'S DepartmentId
     async function populateEmployees(companyID) {
         setEmployees([]);
-        const response = await fetch('departments/' + companyID)
-        const data = await response.json();
-        for (let i = 0; i < data.length; i++) {
-            let departmentID = data[i].departmentId;
-            let res = await fetch('employees/' + departmentID);
-            let data2 = await res.json();
-            for (let x = 0; x < data2.length; x++) {
-                setEmployees(employees => [...employees, data2[x]])
+        try {
+            const response = await fetch('departments/' + companyID)
+            const data = await response.json();
+            for (let i = 0; i < data.length; i++) {
+                let departmentID = data[i].departmentId;
+                let res = await fetch('employees/' + departmentID);
+                let data2 = await res.json();
+                for (let x = 0; x < data2.length; x++) {
+                    setEmployees(employees => [...employees, data2[x]])
+                }
+
             }
-            
+            setEmployeesLoading(false);
+        } catch {
+            console.log('Failed to populate employees.')
         }
-        setEmployeesLoading(false);
     }
 
 
