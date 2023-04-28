@@ -27,7 +27,7 @@ export const ProductItem = (props) => {
                     </tr>
                     <tr>
                         <td><FontAwesomeIcon className="pulse-hover" icon={faPen} color="#635dff" onClick={() => props.editProduct(props.product)} /></td>
-                        <td><FontAwesomeIcon className="shake-hover" icon={faTrash} color="red" onClick={() => props.deleteById(props.product.productId)} /></td>
+                        <td><FontAwesomeIcon className="shake-hover" icon={faTrash} color="red" onClick={() => props.deleteProduct(props.product.productId)} /></td>
                         <td></td>
                     </tr>
                 </tbody>

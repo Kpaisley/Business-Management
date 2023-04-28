@@ -110,7 +110,7 @@ export const Product = (props) => {
             <div id="edit-product-modal">
                 <span className="close-modal-btn" onClick={() => closeModal()}><FontAwesomeIcon icon={faXmark} className="pulse-hover" /></span>
                 <br />
-                <h3><u>{props.productToEdit.productName}</u></h3>
+                <h3><u>Modify {props.productToEdit.productName}</u></h3>
 
                 <div className="product-modal-content">
                     <form onSubmit={(e) => props.modifyProduct(props.productToEdit.productId, e) }>
@@ -145,7 +145,7 @@ export const Product = (props) => {
             
             {props.products.map((product) => {
                 return (
-                    <ProductItem key={product.productId} product={product} changeQty={props.changeQty} deleteById={props.deleteById} editProduct={editProduct} />
+                    <ProductItem key={product.productId} product={product} changeQty={props.changeQty} deleteProduct={props.deleteProduct} editProduct={editProduct} />
                 )
             })}
             <h5>Total Products: {props.products.length}</h5>

@@ -66,7 +66,7 @@ namespace BusinessManagement.Controllers
             return products;
         }
 
-        //MODIFY A PRODUCT
+        //MODIFY AN EXISTING PRODUCT
         [HttpPut("{companyId}")]
         public IEnumerable<Product> Put(string companyId, [FromBody] ModifyProductDTO value)
         {

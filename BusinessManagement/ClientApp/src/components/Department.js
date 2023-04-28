@@ -13,15 +13,29 @@ export const Department = (props) => {
 
     function addDepartment() {
         var addModal = document.getElementById('add-department-modal');
+        var editModal = document.getElementById('edit-department-modal');
         var msg = document.getElementById('add-department-msg');
+        editModal.style.left = '-100%';
         addModal.style.left = '25vw';
         msg.innerHTML = "";
 
     }
 
+    function editDepartment(department) {
+        props.setDepartmentToEdit(department);
+        var editModal = document.getElementById('edit-department-modal');
+        var addModal = document.getElementById('add-department-modal');
+        var msg = document.getElementById('edit-department-msg');
+        addModal.style.left = '-100%';
+        editModal.style.left = '25vw';
+        msg.innerHTML = "";
+    }
+
     function closeModal() {
         var addModal = document.getElementById('add-department-modal');
+        var editModal = document.getElementById('edit-department-modal');
         addModal.style.left = '-100%';
+        editModal.style.left = '-100%';
     }
 
 
@@ -72,7 +86,7 @@ export const Department = (props) => {
                 <div className="department-modal-content">
                     <form onSubmit={(e) => props.addDepartment(e)}>
                         <label htmlFor="department-name"><strong>Department Name *</strong></label>
-                        <input className="department-input" type="text" name="department-name" placeholder="Information Technology" maxLength="30" ></input>
+                        <input className="department-input" type="text" name="department-name" placeholder="Sales" maxLength="30" ></input>
 
                         <input className="submit-btn" type="submit" value="Add Department"></input>
                         <span id="add-department-msg"></span>
@@ -80,7 +94,22 @@ export const Department = (props) => {
                 </div>
             </div>
 
-            
+
+            <div id="edit-department-modal">
+                <span className="close-modal-btn" onClick={() => closeModal()}><FontAwesomeIcon icon={faXmark} className="pulse-hover" /></span>
+                <br />
+                <h3><u>Modify {props.departmentToEdit.departmentName}</u></h3>
+
+                <div className="department-modal-content">
+                    <form onSubmit={(e) => props.modifyDepartment(props.departmentToEdit.departmentId, e) }>
+                        <label htmlFor="department-name"><strong>Department Name *</strong></label>
+                        <input className="department-input" type="text" name="product-name" placeholder={props.departmentToEdit.departmentName} maxLength="30" ></input>
+
+                        <input className="submit-btn" type="submit" value="Continue"></input>
+                        <span id="edit-department-msg"></span>
+                    </form>
+                </div>
+            </div>
 
 
             
@@ -97,7 +126,7 @@ export const Department = (props) => {
             </table>
             {props.departments.map((department) => {
                 return (
-                    <DepartmentItem key={department.departmentId} department={department} employees={props.employees} deleteDepartment={props.deleteDepartment} />
+                    <DepartmentItem key={department.departmentId} department={department} employees={props.employees} deleteDepartment={props.deleteDepartment} editDepartment={editDepartment} />
                 )
             })}
             <h5>Total Departments: {props.departments.length}</h5>

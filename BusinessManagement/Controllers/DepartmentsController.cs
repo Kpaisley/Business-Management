@@ -46,10 +46,21 @@ namespace BusinessManagement.Controllers
             return departments;
         }
 
+        //MODIFY AN EXISTING DEPARTMENT
         // PUT api/<DepartmentsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{departmentId}")]
+        public IEnumerable<Department> Put(string departmentId, [FromBody] ModifyDepartmentDTO department)
         {
+            var departmentToEdit = _context.Departments.FirstOrDefault(d => d.CompanyId.Equals(departmentId) && d.DepartmentId == department.departmentId);
+
+            if (departmentToEdit != null)
+            {
+                departmentToEdit.DepartmentName = department.departmentName;
+                _context.SaveChanges();
+            }
+
+            var departments = _context.Departments.Where(d => d.CompanyId.Equals(departmentId)).ToList();
+            return departments;
         }
 
         // DELETE api/<DepartmentsController>/5

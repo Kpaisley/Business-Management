@@ -24,6 +24,8 @@ const App = () => {
 
     const [productToEdit, setProductToEdit] = useState({});
 
+    const [departmentToEdit, setDepartmentToEdit] = useState({});
+
 
 
 
@@ -41,6 +43,9 @@ const App = () => {
         if (!productName || !unitPrice || !unitsInStock) {
             msg.style.color = "red";
             msg.innerHTML = "Please ensure all fields are filled out."
+        } else if (productName.length > 50) {
+            msg.style.color = "red";
+            msg.innerHTML = "Product Name must be between 1 - 50 characters."
         } else if (unitPrice > 10000000 || unitPrice < 1) {
             msg.style.color = "red";
             msg.innerHTML = "Unit Price must be between $1.00 - $10,000,000.00"
@@ -92,6 +97,9 @@ const App = () => {
         if (!productName || !unitPrice || !unitsInStock) {
             msg.style.color = "red";
             msg.innerHTML = "Please ensure all fields are filled out."
+        } else if (productName.length > 50) {
+            msg.style.color = "red";
+            msg.innerHTML = "Product Name must be between 1 - 50 characters."
         } else if (unitPrice > 10000000 || unitPrice < 1) {
             msg.style.color = "red";
             msg.innerHTML = "Unit Price must be between $1.00 - $10,000,000.00"
@@ -131,7 +139,7 @@ const App = () => {
     }
 
     //DELETE A PRODUCT BY ID
-    async function deleteById(productId) {
+    async function deleteProduct(productId) {
         try {
             const productToDelete = {
                 companyId: user.sub,
@@ -232,6 +240,50 @@ const App = () => {
         }
     }
 
+    //MODIFY AN EXISTING DEPARTMENT
+    async function modifyDepartment(departmentId, e) {
+        e.preventDefault();
+        var msg = document.getElementById('edit-department-msg');
+        var departmentName = e.target[0].value;
+        var departmentId = departmentId;
+
+        msg.style.color = "#635dff"
+        msg.innerHTML = "Modifying Department..."
+
+        if (!departmentName || departmentName.length > 30) {
+            msg.style.color = "red";
+            msg.innerHTML = "Department Name must be between 1 - 30 characters."
+        }
+        else {
+            try {
+                const departmentToEdit = {
+                    departmentId: departmentId,
+                    departmentName: departmentName
+                }
+                const requestOptions = {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(departmentToEdit)
+                }
+
+                const response = await fetch('/departments/' + user.sub, requestOptions);
+                const data = await response.json();
+                setDepartments(data);
+                msg.style.color = "limeGreen";
+                msg.innerHTML = "Modified Successfully!";
+                setDepartmentToEdit(departmentToEdit);
+                e.target[0].value = "";
+                
+
+            } catch {
+                msg.style.color = "red";
+                msg.innerHTML = "Something went wrong...";
+                console.log('Failed to modify a department');
+            }
+        }
+
+    }
+
     //DELETE A DEPARTMENT
     async function deleteDepartment(department) {
         if (window.confirm('Deleting a deparment will result in deleting all employees in the department. Do you want to continue?') == true) {
@@ -325,11 +377,11 @@ const App = () => {
 
                 <Route path="/fetch-data" element={<FetchData />} />
 
-                <Route path="/product" element={<Product products={products} productsLoading={productsLoading} changeQty={changeQty} deleteById={deleteById}
+                <Route path="/product" element={<Product products={products} productsLoading={productsLoading} changeQty={changeQty} deleteProduct={deleteProduct}
                     addProduct={addProduct} modifyProduct={modifyProduct} productToEdit={productToEdit} setProductToEdit={setProductToEdit} />} />
 
                 <Route path="/department" element={<Department departments={departments} departmentsLoading={departmentsLoading} employees={employees} employeesLoading={employeesLoading}
-                    addDepartment={addDepartment} deleteDepartment={deleteDepartment} />} />
+                    addDepartment={addDepartment} deleteDepartment={deleteDepartment} modifyDepartment={modifyDepartment} departmentToEdit={departmentToEdit} setDepartmentToEdit={setDepartmentToEdit}  />} />
         </Routes>
       </Layout>
     );
