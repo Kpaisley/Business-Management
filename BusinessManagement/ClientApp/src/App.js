@@ -6,9 +6,9 @@ import { Home } from './components/Home';
 import { Counter } from './components/Counter';
 import { FetchData } from './components/FetchData';
 import { Product } from './components/Product';
-import axios from 'axios'; //*REMOVE AXIOS FROM PROJECT*\\
 import './custom.css';
 import { Department } from './components/Department';
+import { Employee } from './components/Employee';
 
 const App = () => {
     const { isLoading, isAuthenticated, user } = useAuth0();
@@ -245,7 +245,6 @@ const App = () => {
         e.preventDefault();
         var msg = document.getElementById('edit-department-msg');
         var departmentName = e.target[0].value;
-        var departmentId = departmentId;
 
         msg.style.color = "#635dff"
         msg.innerHTML = "Modifying Department..."
@@ -286,7 +285,7 @@ const App = () => {
 
     //DELETE A DEPARTMENT
     async function deleteDepartment(department) {
-        if (window.confirm('Deleting a deparment will result in deleting all employees in the department. Do you want to continue?') == true) {
+        if (window.confirm('Deleting a deparment will result in deleting all employees in the department. Do you want to continue?') === true) {
             try {
                 const departmentToDelete = {
                     departmentId: department.departmentId,
@@ -381,7 +380,9 @@ const App = () => {
                     addProduct={addProduct} modifyProduct={modifyProduct} productToEdit={productToEdit} setProductToEdit={setProductToEdit} />} />
 
                 <Route path="/department" element={<Department departments={departments} departmentsLoading={departmentsLoading} employees={employees} employeesLoading={employeesLoading}
-                    addDepartment={addDepartment} deleteDepartment={deleteDepartment} modifyDepartment={modifyDepartment} departmentToEdit={departmentToEdit} setDepartmentToEdit={setDepartmentToEdit}  />} />
+                    addDepartment={addDepartment} deleteDepartment={deleteDepartment} modifyDepartment={modifyDepartment} departmentToEdit={departmentToEdit} setDepartmentToEdit={setDepartmentToEdit} />} />
+
+                <Route path="/employee" element={<Employee employees={employees} employeesLoading={employeesLoading} departments={departments} />} />
         </Routes>
       </Layout>
     );

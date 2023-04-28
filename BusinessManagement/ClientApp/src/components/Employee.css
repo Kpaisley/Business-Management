@@ -1,0 +1,69 @@
+﻿
+.employee-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: 0 0 25px 0;
+}
+
+.employee-page h4 {
+    margin: 10px 0 25px 0;
+    color: #635dff;
+}
+
+.employee-page h5 {
+    text-align: left;
+    margin: 15px 0 0 0;
+}
+
+.employee-desc {
+    margin-bottom: 30px;
+}
+
+.employee-desc tr {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 7px;
+}
+
+#add-employee-modal {
+    position: absolute;
+    background-color: white;
+    bottom: 8vh;
+    width: 60vw;
+    transition: left 2s;
+    left: -100%;
+    border-radius: 10px;
+    padding: 25px;
+    color: #635dff;
+    box-shadow: 6px 6px 40px 0px rgba(128,125,128,1);
+    z-index: 5;
+}
+
+.employee-modal-content form {
+    display: flex;
+    flex-direction: column;
+}
+
+#add-employee-modal h3 {
+    margin: 20px 0 40px 0;
+    font-weight: 600;
+}
+
+.employee-input {
+    margin: 0 auto 15px auto;
+    max-width: 75%;
+    width: 400px;
+    border-radius: 7px;
+    text-align: center;
+    border: 2px solid;
+}
+
+.employee-input:hover {
+    background-color: lightgray;
+}
+
+.employee-input:focus {
+    outline: none;
+}
