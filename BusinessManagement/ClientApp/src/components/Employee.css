@@ -67,3 +67,13 @@
 .employee-input:focus {
     outline: none;
 }
+
+.add-employee-form {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 25px;
+    margin: 30px 0 0 0;
+    color: #635dff;
+    box-shadow: 6px 6px 40px 0px rgba(128,125,128,1);
+}

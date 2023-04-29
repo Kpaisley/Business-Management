@@ -29,6 +29,42 @@ export const Employee = (props) => {
         )
     }
 
+    else if (isAuthenticated && props.employees.length <= 0) {
+        return (
+            <div className="employee-page">
+                <h3>It looks like you dont have any employees stored.</h3>
+
+                <h4><u>Add an Employee Below!</u></h4>
+
+                <form className="add-employee-form" onSubmit={(e) => props.addEmployee(e)} >
+                    <label htmlFor="employee-fname"><strong>First Name *</strong></label>
+                    <input className="employee-input" type="text" name="employee-fname" placeholder="John" maxLength="25" ></input>
+
+                    <label htmlFor="employee-lname"><strong>Last Name *</strong></label>
+                    <input className="employee-input" type="text" name="employee-lname" placeholder="Doe" maxLength="25" ></input>
+
+                    <label htmlFor="employee-position"><strong>Position *</strong></label>
+                    <input className="employee-input" type="text" name="employee-position" placeholder="Sr. Developer" maxLength="30" ></input>
+
+                    <label htmlFor="employee-lname"><strong>Yearly Salary *</strong></label>
+                    <input className="employee-input" type="text" name="employee-salary" placeholder="120k" maxLength="25" ></input>
+
+                    <label htmlFor="employee-dept"><strong>Department *</strong></label>
+                    <select className="employee-input" name="employee-dept" >
+                        <option value=""></option>
+                        {
+                            props.departments.map((department) =>
+                                <option key={department.departmentId} value={department.departmentId}>{department.departmentName}</option>)
+                        }
+                    </select>
+
+                    <input className="submit-btn" type="submit" value="Add Department"></input>
+                    <span id="add-employee-msg"></span>
+                </form>
+            </div>
+        )
+    }
+
     else
         return isAuthenticated && (
             <div className="employee-page">
@@ -84,7 +120,7 @@ export const Employee = (props) => {
                 {props.employees.map((employee) => {
                     return (
                         
-                        <EmployeeItem key={employee.employeeId} employee={employee} departments={props.departments} />
+                        <EmployeeItem key={employee.employeeId} employee={employee} departments={props.departments} deleteEmployee={props.deleteEmployee} />
                     )
                 })}
 

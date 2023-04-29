@@ -58,10 +58,24 @@ namespace BusinessManagement.Controllers
         {
         }
 
+
+        //DELETE A PRODUCT
         // DELETE api/<EmployeesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public void Delete([FromBody] DeleteEmployeeDTO employee)
         {
+            var department = _context.Departments.FirstOrDefault(d => d.DepartmentId == employee.departmentId && d.CompanyId.Equals(employee.companyId));
+
+            if (department!= null)
+            {
+                var employeeToDelete = _context.Employees.FirstOrDefault(e => e.DepartmentId == employee.departmentId && e.EmployeeId == employee.employeeId);
+
+                if (employeeToDelete != null)
+                {
+                    _context.Employees.Remove(employeeToDelete);
+                    _context.SaveChanges();
+                }
+            }
         }
     }
 }

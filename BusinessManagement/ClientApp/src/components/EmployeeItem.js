@@ -38,7 +38,7 @@ export const EmployeeItem = (props) => {
                     </tr>
                     <tr>
                         <td><FontAwesomeIcon className="pulse-hover" icon={faPen} color="#635dff"  /></td>
-                        <td><FontAwesomeIcon className="shake-hover" icon={faTrash} color="red"  /></td>
+                        <td><FontAwesomeIcon className="shake-hover" icon={faTrash} color="red" onClick={() => props.deleteEmployee(props.employee) } /></td>
                         <td></td>
                         <td></td>
                     </tr>

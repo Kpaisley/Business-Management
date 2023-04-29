@@ -380,7 +380,6 @@ const App = () => {
                 if (data == true) {
                     msg.style.color = "limeGreen";
                     msg.innerHTML = "Employee Added!"
-
                     populateEmployees(user.sub);
                 }
                 else {
@@ -401,9 +400,35 @@ const App = () => {
 
     }
 
+    //DELETE AN EMPLOYEE
+    async function deleteEmployee(employee) {
+        try {
+            const employeeToDelete = {
+                companyId: user.sub,
+                departmentId: employee.departmentId,
+                employeeId: employee.employeeId
+            }
+
+            const requestOptions = {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(employeeToDelete)
+            }
+            await fetch('/employees', requestOptions);
+            populateEmployees(user.sub);
+            
+        }
+        catch {
+            console.log('Failed to delete an employee.')
+        }
+    }
+
     //POPULATE EMPLOYEES BY CALLING EACH DEPARTMENT FROM THE CompanyID AND THEN RETRIEVING EACH EMPLOYEE BY IT'S DepartmentId
     async function populateEmployees(companyID) {
+
+        //SET EMPLOYEES TO EMPTY ARRAY PREVENTS DUPLICATE EMPLOYEES BEING ADDED TO ARRAY.
         setEmployees([]);
+
         try {
             const response = await fetch('departments/' + companyID)
             const data = await response.json();
@@ -414,7 +439,6 @@ const App = () => {
                 for (let x = 0; x < data2.length; x++) {
                     setEmployees(employees => [...employees, data2[x]])
                 }
-
             }
             setEmployeesLoading(false);
         } catch {
@@ -458,7 +482,8 @@ const App = () => {
                 <Route path="/department" element={<Department departments={departments} departmentsLoading={departmentsLoading} employees={employees} employeesLoading={employeesLoading}
                     addDepartment={addDepartment} deleteDepartment={deleteDepartment} modifyDepartment={modifyDepartment} departmentToEdit={departmentToEdit} setDepartmentToEdit={setDepartmentToEdit} />} />
 
-                <Route path="/employee" element={<Employee employees={employees} employeesLoading={employeesLoading} departments={departments} addEmployee={addEmployee} />} />
+                <Route path="/employee" element={<Employee employees={employees} employeesLoading={employeesLoading} departments={departments} addEmployee={addEmployee}
+                    deleteEmployee={deleteEmployee}                />} />
         </Routes>
       </Layout>
     );

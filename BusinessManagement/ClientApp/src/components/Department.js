@@ -61,7 +61,7 @@ export const Department = (props) => {
 
                 <form className="add-department-form" onSubmit={(e) => props.addDepartment(e)} >
                     <label htmlFor="department-name"><strong>Department Name *</strong></label>
-                    <input className="department-input" type="text" name="department-name" placeholder="Information Technology" maxLength="29" ></input>
+                    <input className="department-input" type="text" name="department-name" placeholder="Information Technology" maxLength="29"  ></input>
                     <input className="submit-btn" type="submit" value="Add Department"></input>
                     <span id="add-department-msg"></span>
                 </form>
