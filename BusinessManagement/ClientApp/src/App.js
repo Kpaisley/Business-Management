@@ -1,14 +1,14 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Layout } from './components/Layout';
-import { useAuth0 } from '@auth0/auth0-react';
-import { Home } from './components/Home';
 import { Counter } from './components/Counter';
-import { FetchData } from './components/FetchData';
-import { Product } from './components/Product';
-import './custom.css';
 import { Department } from './components/Department';
 import { Employee } from './components/Employee';
+import { FetchData } from './components/FetchData';
+import { Home } from './components/Home';
+import { Layout } from './components/Layout';
+import { Product } from './components/Product';
+import './custom.css';
 
 const App = () => {
     const { isLoading, isAuthenticated, user } = useAuth0();
@@ -236,6 +236,7 @@ const App = () => {
             catch {
                 msg.style.color = "red";
                 msg.innerHTML = "Something went wrong...";
+                console.log("Failed to add a department.")
             }
         }
     }
@@ -325,6 +326,81 @@ const App = () => {
 
 
     //////////////////////////////////////////////////////////////////////////// ** EMPLOYEE CONTROLLER FUNCTIONS ** \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    //ADD AN EMPLOYEE
+    async function addEmployee(e) {
+        e.preventDefault();
+        var msg = document.getElementById('add-employee-msg');
+        msg.style.color = "#635dff"
+        msg.innerHTML = "Creating Department...";
+
+        const employeeToAdd = {
+            departmentId: e.target[4].value,
+            firstName: e.target[0].value,
+            lastName: e.target[1].value,
+            position: e.target[2].value,
+            salary: e.target[3].value + "/year"
+        }
+
+        if (!employeeToAdd.firstName || !employeeToAdd.lastName || !employeeToAdd.position || !employeeToAdd.salary) {
+            msg.style.color = "red";
+            msg.innerHTML = "Please ensure all fields are filled out."
+        }
+        else if (!employeeToAdd.departmentId) {
+            msg.style.color = "red";
+            msg.innerHTML = "Employees must be part of a department."
+        }
+        else if (employeeToAdd.firstName.length > 25) {
+            msg.style.color = "red";
+            msg.innerHTML = "First Name must be between 0 - 25 characters."
+        }
+        else if (employeeToAdd.lastName.length > 25) {
+            msg.style.color = "red";
+            msg.innerHTML = "Last Name must be between 0 - 25 characters."
+        }
+        else if (employeeToAdd.position.length > 30) {
+            msg.style.color = "red";
+            msg.innerHTML = "Position must be between 0 - 30 characters."
+        }
+        else if (employeeToAdd.salary.length > 25) {
+            msg.style.color = "red";
+            msg.innerHTML = "Salary must be between 0 - 25 characters."
+        }
+        else
+            try {
+
+                const requestOptions = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(employeeToAdd)
+                }
+
+                const response = await fetch('/employees/' + user.sub, requestOptions);
+                const data = await response.json();
+                if (data == true) {
+                    msg.style.color = "limeGreen";
+                    msg.innerHTML = "Employee Added!"
+
+                    populateEmployees(user.sub);
+                }
+                else {
+                    msg.style.color = "red";
+                    msg.innerHTML = "Something went wrong...";
+                }                
+
+                for (let i = 0; i < 5; i++) {
+                    e.target[i].value = "";
+                }
+            }
+            catch {
+                msg.style.color = "red"
+                msg.innerHTML = "Something went wrong...";
+                console.log('Failed to add an employee.');
+            }
+
+
+    }
+
     //POPULATE EMPLOYEES BY CALLING EACH DEPARTMENT FROM THE CompanyID AND THEN RETRIEVING EACH EMPLOYEE BY IT'S DepartmentId
     async function populateEmployees(companyID) {
         setEmployees([]);
@@ -382,7 +458,7 @@ const App = () => {
                 <Route path="/department" element={<Department departments={departments} departmentsLoading={departmentsLoading} employees={employees} employeesLoading={employeesLoading}
                     addDepartment={addDepartment} deleteDepartment={deleteDepartment} modifyDepartment={modifyDepartment} departmentToEdit={departmentToEdit} setDepartmentToEdit={setDepartmentToEdit} />} />
 
-                <Route path="/employee" element={<Employee employees={employees} employeesLoading={employeesLoading} departments={departments} />} />
+                <Route path="/employee" element={<Employee employees={employees} employeesLoading={employeesLoading} departments={departments} addEmployee={addEmployee} />} />
         </Routes>
       </Layout>
     );

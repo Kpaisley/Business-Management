@@ -19,7 +19,6 @@ export const Employee = (props) => {
         addModal.style.left = "-100%";
     }
 
-
     if (!isAuthenticated) {
         window.location.href = "";
     }
@@ -40,7 +39,7 @@ export const Employee = (props) => {
                     <h3><u>Add an Employee!</u></h3>
 
                     <div className="employee-modal-content">
-                        <form >
+                        <form onSubmit={(e) => props.addEmployee(e)}>
                             <label htmlFor="employee-fname"><strong>First Name *</strong></label>
                             <input className="employee-input" type="text" name="employee-fname" placeholder="John" maxLength="25" ></input>
 
@@ -59,7 +58,8 @@ export const Employee = (props) => {
                                 {
                                 props.departments.map((department) => 
                                     <option key={department.departmentId} value={department.departmentId}>{department.departmentName}</option>)
-                            }</select>
+                                }
+                            </select>
 
                             <input className="submit-btn" type="submit" value="Add Department"></input>
                             <span id="add-employee-msg"></span>
@@ -88,7 +88,7 @@ export const Employee = (props) => {
                     )
                 })}
 
-                <h5>Total Products: {props.employees.length}</h5>
+                <h5>Total Employees: {props.employees.length}</h5>
             </div>
     )
 }

@@ -1,5 +1,7 @@
 ﻿using BusinessManagement.Data;
+using BusinessManagement.Data.DTO;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -32,10 +34,22 @@ namespace BusinessManagement.Controllers
             return employees;
         }
 
+        //ADD AN EMPLOYEE
         // POST api/<EmployeesController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("{companyId}")]
+        public bool Post(string companyId, [FromBody] AddEmployeeDTO employee)
         {
+            var departmentFound = _context.Departments.FirstOrDefault(d => d.DepartmentId == employee.departmentId && d.CompanyId.Equals(companyId));
+
+            if (departmentFound != null)
+            {
+                Employee employeeToAdd = new Employee { DepartmentId = employee.departmentId, FirstName = employee.firstName, LastName = employee.lastName, Position = employee.position,
+                                                        Salary = employee.salary};
+                _context.Employees.Add(employeeToAdd);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         // PUT api/<EmployeesController>/5
