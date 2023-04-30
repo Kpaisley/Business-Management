@@ -27,7 +27,7 @@
     margin-bottom: 7px;
 }
 
-#add-employee-modal {
+#add-employee-modal, #edit-employee-modal {
     position: absolute;
     background-color: white;
     bottom: 8vh;
@@ -46,7 +46,7 @@
     flex-direction: column;
 }
 
-#add-employee-modal h3 {
+#add-employee-modal h3, #edit-employee-modal h3 {
     margin: 20px 0 40px 0;
     font-weight: 600;
 }

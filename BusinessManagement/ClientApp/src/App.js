@@ -26,6 +26,8 @@ const App = () => {
 
     const [departmentToEdit, setDepartmentToEdit] = useState({});
 
+    const [employeeToEdit, setEmployeeToEdit] = useState({});
+
 
 
 
@@ -339,7 +341,7 @@ const App = () => {
             firstName: e.target[0].value,
             lastName: e.target[1].value,
             position: e.target[2].value,
-            salary: e.target[3].value + "/year"
+            salary: e.target[3].value
         }
 
         if (!employeeToAdd.firstName || !employeeToAdd.lastName || !employeeToAdd.position || !employeeToAdd.salary) {
@@ -400,6 +402,57 @@ const App = () => {
 
     }
 
+    //MODIFY AN EXISTING EMPLOYEE
+    async function modifyEmployee(employeeId, e) {
+        e.preventDefault();
+        var msg = document.getElementById('edit-employee-msg');
+        msg.style.color = "#635dff"
+        msg.innerHTML = "Modifying Employee...";
+
+        const employeeToModify = {
+            departmentId: e.target[4].value,
+            firstName: e.target[0].value,
+            lastName: e.target[1].value,
+            position: e.target[2].value,
+            salary: e.target[3].value
+        }
+        if (!employeeToModify.firstName || !employeeToModify.lastName || !employeeToModify.position || !employeeToModify.salary) {
+            msg.style.color = "red";
+            msg.innerHTML = "Please ensure all fields are filled out."
+        }
+        else if (!employeeToModify.departmentId) {
+            msg.style.color = "red";
+            msg.innerHTML = "Employees must be part of a department."
+        }
+        else if (employeeToModify.firstName.length > 25) {
+            msg.style.color = "red";
+            msg.innerHTML = "First Name must be between 0 - 25 characters."
+        }
+        else if (employeeToModify.lastName.length > 25) {
+            msg.style.color = "red";
+            msg.innerHTML = "Last Name must be between 0 - 25 characters."
+        }
+        else if (employeeToModify.position.length > 30) {
+            msg.style.color = "red";
+            msg.innerHTML = "Position must be between 0 - 30 characters."
+        }
+        else if (employeeToModify.salary.length > 25) {
+            msg.style.color = "red";
+            msg.innerHTML = "Salary must be between 0 - 25 characters."
+        }
+        else {
+            try {
+                //Call API Here
+            }
+            catch {
+                msg.style.color = "red"
+                msg.innerHTML = "Something went wrong...";
+                console.log('Failed to modify an employee.');
+            }
+        }
+            
+    }
+
     //DELETE AN EMPLOYEE
     async function deleteEmployee(employee) {
         try {
@@ -426,24 +479,46 @@ const App = () => {
     //POPULATE EMPLOYEES BY CALLING EACH DEPARTMENT FROM THE CompanyID AND THEN RETRIEVING EACH EMPLOYEE BY IT'S DepartmentId
     async function populateEmployees(companyID) {
 
-        //SET EMPLOYEES TO EMPTY ARRAY PREVENTS DUPLICATE EMPLOYEES BEING ADDED TO ARRAY.
-        setEmployees([]);
-
         try {
-            const response = await fetch('departments/' + companyID)
+            const response = await fetch('employees/' + companyID);
             const data = await response.json();
-            for (let i = 0; i < data.length; i++) {
-                let departmentID = data[i].departmentId;
-                let res = await fetch('employees/' + departmentID);
-                let data2 = await res.json();
-                for (let x = 0; x < data2.length; x++) {
-                    setEmployees(employees => [...employees, data2[x]])
-                }
-            }
+            setEmployees(data);
             setEmployeesLoading(false);
-        } catch {
-            console.log('Failed to populate employees.')
         }
+        catch {
+            console.log('Failed to populate employees.');
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //SET EMPLOYEES TO EMPTY ARRAY PREVENTS DUPLICATE EMPLOYEES BEING ADDED TO ARRAY.
+        /*setEmployees([]);*/
+
+        //try {
+        //    const response = await fetch('departments/' + companyID)
+        //    const data = await response.json();
+        //    for (let i = 0; i < data.length; i++) {
+        //        let departmentID = data[i].departmentId;
+        //        let res = await fetch('employees/' + departmentID);
+        //        let data2 = await res.json();
+        //        for (let x = 0; x < data2.length; x++) {
+        //            setEmployees(employees => [...employees, data2[x]])
+        //        }
+        //    }
+        //    setEmployeesLoading(false);
+        //} catch {
+        //    console.log('Failed to populate employees.')
+        //}
     }
 
 
@@ -483,7 +558,7 @@ const App = () => {
                     addDepartment={addDepartment} deleteDepartment={deleteDepartment} modifyDepartment={modifyDepartment} departmentToEdit={departmentToEdit} setDepartmentToEdit={setDepartmentToEdit} />} />
 
                 <Route path="/employee" element={<Employee employees={employees} employeesLoading={employeesLoading} departments={departments} addEmployee={addEmployee}
-                    deleteEmployee={deleteEmployee}                />} />
+                    deleteEmployee={deleteEmployee} modifyEmployee={modifyEmployee} employeeToEdit={employeeToEdit} setEmployeeToEdit={setEmployeeToEdit} />} />
         </Routes>
       </Layout>
     );

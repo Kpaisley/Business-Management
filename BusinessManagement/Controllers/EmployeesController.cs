@@ -2,6 +2,7 @@
 using BusinessManagement.Data.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata;
+using System.Transactions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,17 +22,34 @@ namespace BusinessManagement.Controllers
 
         // GET: api/<EmployeesController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public int Get()
         {
-            return new string[] { "value1", "value2" };
+            return 5;
         }
 
+        //RETURN ALL EMPLOYEES FROM EACH DEPARTMENT ASSOCIATED WITH CompanyId
         // GET api/<EmployeesController>/5
-        [HttpGet("{departmentID}")]
-        public IEnumerable<Employee> Get(int departmentID)
+        [HttpGet("{companyID}")]
+        public IEnumerable<Employee> Get(string companyID)
         {
-            var employees = _context.Employees.Where(e => e.DepartmentId == departmentID).ToList();
-            return employees;
+            var departments = _context.Departments.Where(d => d.CompanyId.Equals(companyID)).ToList();
+
+            var empList = new List<Employee>();
+
+            for (int i = 0; i < departments.Count; i++)
+            {
+                var employees = _context.Employees.Where(e => e.DepartmentId == departments[i].DepartmentId).ToList();
+
+                foreach(var emp in employees)
+                {
+                    empList.Add(new Employee { DepartmentId = emp.DepartmentId, EmployeeId = emp.EmployeeId, FirstName = emp.FirstName, LastName = emp.LastName, Position = emp.Position, Salary = emp.Salary });
+                }
+            }
+            return empList;
+
+
+            //var employees = _context.Employees.Where(e => e.DepartmentId == departmentID).ToList();
+            //return employees;
         }
 
         //ADD AN EMPLOYEE

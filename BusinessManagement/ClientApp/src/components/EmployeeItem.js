@@ -32,12 +32,12 @@ export const EmployeeItem = (props) => {
                         <td><strong>{props.employee.firstName} {props.employee.lastName}</strong></td>
                         <td><strong>{departmentName()}</strong></td>
                         <td><strong>{props.employee.position}</strong></td>
-                        <td><strong>${props.employee.salary}</strong></td>
+                        <td><strong>${props.employee.salary}/year</strong></td>
                             
                         
                     </tr>
                     <tr>
-                        <td><FontAwesomeIcon className="pulse-hover" icon={faPen} color="#635dff"  /></td>
+                        <td><FontAwesomeIcon className="pulse-hover" icon={faPen} color="#635dff" onClick={() => props.editEmployee(props.employee) } /></td>
                         <td><FontAwesomeIcon className="shake-hover" icon={faTrash} color="red" onClick={() => props.deleteEmployee(props.employee) } /></td>
                         <td></td>
                         <td></td>

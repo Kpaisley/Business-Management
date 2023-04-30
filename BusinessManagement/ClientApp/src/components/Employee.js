@@ -11,12 +11,24 @@ export const Employee = (props) => {
 
     function addEmployee() {
         var addModal = document.getElementById('add-employee-modal');
+        var editModal = document.getElementById('edit-employee-modal');
+        editModal.style.left = "-100%";
         addModal.style.left = "25vw";
     }
 
     function closeModal() {
         var addModal = document.getElementById('add-employee-modal');
+        var editModal = document.getElementById('edit-employee-modal');
         addModal.style.left = "-100%";
+        editModal.style.left = "-100%";
+    }
+
+    function editEmployee(employee) {
+        props.setEmployeeToEdit(employee);
+        var editModal = document.getElementById('edit-employee-modal');
+        var addModal = document.getElementById('add-employee-modal');
+        addModal.style.left = "-100%";
+        editModal.style.left = "25vw";
     }
 
     if (!isAuthenticated) {
@@ -97,11 +109,47 @@ export const Employee = (props) => {
                                 }
                             </select>
 
-                            <input className="submit-btn" type="submit" value="Add Department"></input>
+                            <input className="submit-btn" type="submit" value="Add Employee"></input>
                             <span id="add-employee-msg"></span>
                         </form>
                     </div>
                 </div>
+
+                <div id="edit-employee-modal">
+                    <span className="close-modal-btn" onClick={() => closeModal()}><FontAwesomeIcon icon={faXmark} className="pulse-hover" /></span>
+                    <br />
+                    <h3><u>Modify {props.employeeToEdit.firstName} {props.employeeToEdit.lastName}</u></h3>
+
+                    <div className="employee-modal-content">
+                        <form onSubmit={(e) => props.modifyEmployee(props.employeeToEdit.employeeId, e)}>
+                            <label htmlFor="employee-fname"><strong>First Name *</strong></label>
+                            <input className="employee-input" type="text" name="employee-fname" placeholder={props.employeeToEdit.firstName} maxLength="25" ></input>
+
+                            <label htmlFor="employee-lname"><strong>Last Name *</strong></label>
+                            <input className="employee-input" type="text" name="employee-lname" placeholder={props.employeeToEdit.lastName} maxLength="25" ></input>
+
+                            <label htmlFor="employee-position"><strong>Position *</strong></label>
+                            <input className="employee-input" type="text" name="employee-position" placeholder={props.employeeToEdit.position} maxLength="30" ></input>
+
+                            <label htmlFor="employee-lname"><strong>Yearly Salary *</strong></label>
+                            <input className="employee-input" type="text" name="employee-salary" placeholder={props.employeeToEdit.salary} maxLength="25" ></input>
+
+                            <label htmlFor="employee-dept"><strong>Department *</strong></label>
+                            <select className="employee-input" name="employee-dept" >
+                                <option value=""></option>
+                                {
+                                    props.departments.map((department) =>
+                                        <option key={department.departmentId} value={department.departmentId}>{department.departmentName}</option>)
+                                }
+                            </select>
+
+                            <input className="submit-btn" type="submit" value="Continue"></input>
+                            <span id="edit-employee-msg"></span>
+                        </form>
+                    </div>
+                </div>
+
+
 
 
                 <h3>Browse your Employees below!</h3>
@@ -120,7 +168,7 @@ export const Employee = (props) => {
                 {props.employees.map((employee) => {
                     return (
                         
-                        <EmployeeItem key={employee.employeeId} employee={employee} departments={props.departments} deleteEmployee={props.deleteEmployee} />
+                        <EmployeeItem key={employee.employeeId} employee={employee} departments={props.departments} deleteEmployee={props.deleteEmployee} editEmployee={editEmployee} />
                     )
                 })}
 
