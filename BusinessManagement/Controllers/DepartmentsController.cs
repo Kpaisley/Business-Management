@@ -17,14 +17,6 @@ namespace BusinessManagement.Controllers
             _context = context;
         }
 
-
-        // GET: api/<DepartmentsController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
         // GET api/<DepartmentsController>/5
         [HttpGet("{companyID}")]
         public IEnumerable<Department> Get(string companyID)
@@ -58,6 +50,10 @@ namespace BusinessManagement.Controllers
                 departmentToEdit.DepartmentName = department.departmentName;
                 _context.SaveChanges();
             }
+            else if (departmentToEdit == null)
+            {
+                throw new Exception();
+            }
 
             var departments = _context.Departments.Where(d => d.CompanyId.Equals(departmentId)).ToList();
             return departments;
@@ -85,6 +81,10 @@ namespace BusinessManagement.Controllers
                 _context.Departments.Remove(departmentToDelete);
                 _context.SaveChanges();
 
+            }
+            else if (departmentToDelete == null)
+            {
+                throw new Exception();
             }
 
             var departments = _context.Departments.Where(d => d.CompanyId.Equals(department.companyId)).ToList();

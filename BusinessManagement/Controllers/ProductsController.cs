@@ -1,5 +1,6 @@
 ﻿using BusinessManagement.Data;
 using BusinessManagement.Data.DTO;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -62,6 +63,10 @@ namespace BusinessManagement.Controllers
                     _context.SaveChanges();
                 }
             }
+            else if (productToChange == null)
+            {
+                throw new Exception();
+            }
             var products = _context.Products.Where(p => p.CompanyId.Equals(value.companyId));
             return products;
         }
@@ -79,6 +84,10 @@ namespace BusinessManagement.Controllers
                 productToModify.UnitsInStock = value.unitsInStock;
                 _context.SaveChanges();
             }
+            else if (productToModify == null)
+            {
+                throw new Exception();
+            }
 
             var products = _context.Products.Where(p => p.CompanyId.Equals(companyId)).ToList();
             return products;
@@ -95,6 +104,10 @@ namespace BusinessManagement.Controllers
             {
                 _context.Products.Remove(productToDelete);
                 _context.SaveChanges();
+            }
+            else if(productToDelete == null)
+            {
+                throw new Exception();
             }
             var products = _context.Products.Where(p => p.CompanyId.Equals(product.companyId));
             return products;

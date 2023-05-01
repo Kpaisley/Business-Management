@@ -20,17 +20,31 @@
 
 .features p {
     text-align: center;
-    margin: 0 0 75px 0;
+    margin: 10px auto 50px auto;
+    font-size: larger;
+    font-weight: 500;
+    width: 90%;
 }
 
-.features h4 {
+.features h3 {
     text-align: center;
     color: #635dff;
     text-decoration: underline;
+    margin-bottom: 25px;
 }
 
 .features ul {
     list-style: none;
+}
+
+.features li {
+    margin: 10px;
+    font-size: large;
+    font-weight: 400;
+}
+
+.features li:last-of-type {
+    margin-bottom: 30px;
 }
 
 .features ul li::before {
@@ -40,6 +54,18 @@
   display: inline-block; 
   width: 1em; 
   margin-left: -1em; 
+}
+
+.features h5 {
+    margin: 50px auto 75px auto;
+    text-align: center;
+    width: 60%
+}
+
+.features h5:hover {
+    color: #635dff;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 

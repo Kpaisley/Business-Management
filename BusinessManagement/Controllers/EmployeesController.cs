@@ -19,14 +19,6 @@ namespace BusinessManagement.Controllers
             _context = context;
         }
 
-
-        // GET: api/<EmployeesController>
-        [HttpGet]
-        public int Get()
-        {
-            return 5;
-        }
-
         //RETURN ALL EMPLOYEES FROM EACH DEPARTMENT ASSOCIATED WITH CompanyId
         // GET api/<EmployeesController>/5
         [HttpGet("{companyID}")]
@@ -46,10 +38,6 @@ namespace BusinessManagement.Controllers
                 }
             }
             return empList;
-
-
-            //var employees = _context.Employees.Where(e => e.DepartmentId == departmentID).ToList();
-            //return employees;
         }
 
         //ADD AN EMPLOYEE
@@ -67,7 +55,7 @@ namespace BusinessManagement.Controllers
                 _context.SaveChanges();
                 return true;
             }
-            return false;
+            throw new Exception();
         }
 
         //MODIFY AN EXISTING EMPLOYEE
@@ -101,12 +89,12 @@ namespace BusinessManagement.Controllers
                     }
                 }
             }
-            return false;
+            throw new Exception();
         }
 
         
 
-        //DELETE A PRODUCT
+        //DELETE AN EMPLOYEE
         // DELETE api/<EmployeesController>/5
         [HttpDelete]
         public void Delete([FromBody] DeleteEmployeeDTO employee)
@@ -122,6 +110,14 @@ namespace BusinessManagement.Controllers
                     _context.Employees.Remove(employeeToDelete);
                     _context.SaveChanges();
                 }
+                else if (employeeToDelete == null)
+                {
+                    throw new Exception();
+                }
+            }
+            else if (department == null)
+            {
+                throw new Exception();
             }
         }
     }

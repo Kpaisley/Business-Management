@@ -4,7 +4,7 @@ import './Home.css';
 import { Dashboard } from './Dashboard';
 
 export const Home = (props) => {
-    const { isAuthenticated } = useAuth0();
+    const { isAuthenticated, loginWithRedirect } = useAuth0();
 
     
 
@@ -36,12 +36,15 @@ export const Home = (props) => {
                 </div>
                 <div className="features">
                     <p>Using Auth0 authentication, you can securely store important information related to your business and never worry about your data being exposed.</p>
-                    <h4>Features</h4>
+                    <h3>Features</h3>
                     <ul>
                         <li>Our technology implements Auth0 Authentication so you can be sure that your information is kept secure.</li>
                         <li>Interact with your dashboard where you can view information stored in our SQL Server database.</li>
                         <li>Access and manage your company departments, employees and product information in real time so you never fall behind!</li>
+                        <li>Built using ReactJS SPA, experience a seamless user experience and fast loading times.</li>
+                        <li>This fully responsive application means that you can conveniently access all features on all mobile devices.</li>
                     </ul>
+                    <h5 className="pulse-hover-sm" onClick={() => loginWithRedirect()}>Click here to get started!</h5>
                 </div>
             </div>
         );

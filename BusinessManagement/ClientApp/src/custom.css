@@ -71,6 +71,15 @@ code {
     cursor: pointer;
 }
 
+.pulse-hover-sm {
+    transition: transform .2s;
+}
+
+.pulse-hover-sm:hover {
+    transform: scale(1.04);
+    cursor: pointer;
+}
+
 .shake-hover:hover {
     cursor: pointer;
     animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;

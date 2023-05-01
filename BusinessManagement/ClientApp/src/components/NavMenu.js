@@ -25,13 +25,13 @@ export const NavMenu = (props) => {
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!collapsed} navbar>
             <ul className="navbar-nav flex-grow">
               <NavItem hidden={!isAuthenticated}>
-                <NavLink tag={Link} className="text-dark" to="/product">Products</NavLink>
+                <NavLink tag={Link} className="text-dark pulse-hover-sm" to="/product">Products</NavLink>
               </NavItem>
               <NavItem hidden={!isAuthenticated}>
-                <NavLink tag={Link} className="text-dark" to="/department">Departments</NavLink>
+                            <NavLink tag={Link} className="text-dark pulse-hover-sm" to="/department">Departments</NavLink>
               </NavItem>
               <NavItem hidden={!isAuthenticated}>
-                <NavLink tag={Link} className="text-dark" to="/employee">Employees</NavLink>
+                            <NavLink tag={Link} className="text-dark pulse-hover-sm" to="/employee">Employees</NavLink>
               </NavItem>
               <NavItem hidden={!isAuthenticated}>
                 <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
@@ -40,10 +40,10 @@ export const NavMenu = (props) => {
                 <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
               </NavItem>
               <NavItem hidden={isAuthenticated}>
-                <NavLink tag={Link} className="text-dark" to="/" onClick={() => loginWithRedirect()}>Login/Signup</NavLink>
+                            <NavLink tag={Link} className="text-dark pulse-hover-sm" to="/" onClick={() => loginWithRedirect()}>Login/Signup</NavLink>
               </NavItem>
               <NavItem hidden={!isAuthenticated}>
-                <NavLink tag={Link} className="text-dark" to="/" onClick={() => logout()}>Logout</NavLink>
+                <NavLink tag={Link} className="text-dark pulse-hover-sm" to="/" onClick={() => logout()}>Logout</NavLink>
               </NavItem>
             </ul>
           </Collapse>

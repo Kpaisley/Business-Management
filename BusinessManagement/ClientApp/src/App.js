@@ -308,7 +308,7 @@ const App = () => {
                 populateEmployees(user.sub);
             }
             catch { 
-                console.log("Something went wrong...");
+                console.log("Failed to delete a department.");
             }
         }
     }
@@ -383,10 +383,6 @@ const App = () => {
                     msg.style.color = "limeGreen";
                     msg.innerHTML = "Employee Added!"
                     populateEmployees(user.sub);
-                }
-                else {
-                    msg.style.color = "red";
-                    msg.innerHTML = "Something went wrong...";
                 }                
 
                 for (let i = 0; i < 5; i++) {
@@ -451,7 +447,6 @@ const App = () => {
 
                 const response = await fetch('employees/' + user.sub, requestOptions);
                 const data = await response.json();
-                console.log(data);
                 if (data == true) {
                     msg.style.color = "limeGreen";
                     msg.innerHTML = "Modified Successfully!"
@@ -460,11 +455,6 @@ const App = () => {
                     for (let i = 0; i < 5; i++) {
                         e.target[i].value = "";
                     }
-                }
-                else {
-
-                    msg.style.color = "red";
-                    msg.innerHTML = "Something went wrong..."
                 }
                 
             }

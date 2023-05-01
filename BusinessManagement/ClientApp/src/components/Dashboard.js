@@ -26,27 +26,30 @@ export const Dashboard = (props) => {
                     </div>
                 </Link>
                 
-                
-
-                <div className="info-box pulse-hover-sm">
-                    <h3>Departments</h3>
-                    <FontAwesomeIcon className="dashboard-icons" icon={faBuilding} size="7x" />
-                    <div className="user-totals">
-                        {props.departmentsLoading ? <span className="inline-loader"><span className="loader-box"></span><span className="loader-box"></span><span className="loader-box"></span></span>
-                            : props.departments.length}
+                <Link className="dashboard-links" to="/department">
+                    <div className="info-box pulse-hover-sm">
+                        <h3>Departments</h3>
+                        <FontAwesomeIcon className="dashboard-icons" icon={faBuilding} size="7x" />
+                        <div className="user-totals">
+                            {props.departmentsLoading ? <span className="inline-loader"><span className="loader-box"></span><span className="loader-box"></span><span className="loader-box"></span></span>
+                                : props.departments.length}
+                        </div>
+                        <p>Click to view!</p>
                     </div>
-                    <p>Click to view!</p>
-                </div>
+                </Link>
 
-                <div className="info-box pulse-hover-sm">
-                    <h3>Employees</h3>
-                    <FontAwesomeIcon className="dashboard-icons" icon={faUsers} size="7x" />
-                    <div className="user-totals">
-                        {props.employeesLoading ? <span className="inline-loader"><span className="loader-box"></span><span className="loader-box"></span><span className="loader-box"></span></span>
-                            : props.employees.length}
+                <Link className="dashboard-links" to="/employee">
+                    <div className="info-box pulse-hover-sm">
+                        <h3>Employees</h3>
+                        <FontAwesomeIcon className="dashboard-icons" icon={faUsers} size="7x" />
+                        <div className="user-totals">
+                            {props.employeesLoading ? <span className="inline-loader"><span className="loader-box"></span><span className="loader-box"></span><span className="loader-box"></span></span>
+                                : props.employees.length}
+                        </div>
+                        <p>Click to view!</p>
                     </div>
-                    <p>Click to view!</p>
-                </div>
+                </Link>
+
             </div>
         </div>
     )
