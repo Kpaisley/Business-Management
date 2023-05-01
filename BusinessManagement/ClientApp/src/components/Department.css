@@ -28,10 +28,10 @@
     margin-bottom: 7px;
 }
 
-#add-department-modal {
-    position: absolute;
+#add-department-modal, #edit-department-modal {
+    position: fixed;
     background-color: white;
-    bottom: 8vh;
+    bottom: 20vh;
     width: 60vw;
     transition: left 2s;
     left: -100%;
@@ -42,19 +42,7 @@
     z-index: 5;
 }
 
-#edit-department-modal {
-    position: absolute;
-    background-color: white;
-    bottom: 8vh;
-    width: 60vw;
-    transition: left 2s;
-    left: -100%;
-    border-radius: 10px;
-    padding: 25px;
-    color: #635dff;
-    box-shadow: 6px 6px 40px 0px rgba(128,125,128,1);
-    z-index: 5;
-}
+
 
 .department-modal-content form {
     display: flex;

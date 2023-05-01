@@ -21,7 +21,7 @@ export const Product = (props) => {
         var editModal = document.getElementById('edit-product-modal');
         var msg = document.getElementById('add-product-msg');
         editModal.style.left = '-100%';
-        addModal.style.left = '25vw';
+        addModal.style.left = '20vw';
         msg.innerHTML = "";
         
     }
@@ -39,7 +39,7 @@ export const Product = (props) => {
         var addModal = document.getElementById('add-product-modal');
         var msg = document.getElementById('edit-product-msg');
         addModal.style.left = '-100%';
-        editModal.style.left = '25vw';
+        editModal.style.left = '20vw';
         msg.innerHTML = "";
     }
 

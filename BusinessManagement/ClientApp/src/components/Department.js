@@ -16,7 +16,7 @@ export const Department = (props) => {
         var editModal = document.getElementById('edit-department-modal');
         var msg = document.getElementById('add-department-msg');
         editModal.style.left = '-100%';
-        addModal.style.left = '25vw';
+        addModal.style.left = '20vw';
         msg.innerHTML = "";
 
     }
@@ -27,7 +27,7 @@ export const Department = (props) => {
         var addModal = document.getElementById('add-department-modal');
         var msg = document.getElementById('edit-department-msg');
         addModal.style.left = '-100%';
-        editModal.style.left = '25vw';
+        editModal.style.left = '20vw';
         msg.innerHTML = "";
     }
 

@@ -40,10 +40,10 @@
 
 
 
-#add-product-modal {
-    position: absolute;
+#add-product-modal, #edit-product-modal {
+    position: fixed;
     background-color: white;
-    bottom: 8vh;
+    bottom: 20vh;
     width: 60vw;
     transition: left 2s;
     left: -100%;
@@ -59,19 +59,7 @@
     font-weight: 600;
 }
 
-#edit-product-modal {
-    position: absolute;
-    background-color: white;
-    bottom: 8vh;
-    width: 60vw;
-    transition: left 2s;
-    left: -100%;
-    border-radius: 10px;
-    padding: 25px;
-    color: #635dff;
-    box-shadow: 6px 6px 40px 0px rgba(128,125,128,1);
-    z-index: 5;
-}
+
 
 .product-modal-content form {
     display: flex;

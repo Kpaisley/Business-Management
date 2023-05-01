@@ -70,12 +70,41 @@ namespace BusinessManagement.Controllers
             return false;
         }
 
+        //MODIFY AN EXISTING EMPLOYEE
         // PUT api/<EmployeesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{companyId}")]
+        public bool Put(string companyId, [FromBody] ModifyEmployeeDTO employee)
         {
+
+            var depts = _context.Departments.Where(d => d.CompanyId == companyId).ToList();
+            var departmentFound = _context.Departments.FirstOrDefault(d => d.CompanyId.Equals(companyId) && d.DepartmentId == employee.departmentId);
+
+           if (departmentFound != null)
+            {
+                for (int i = 0; i < depts.Count; i++)
+                {
+                    if (_context.Employees.FirstOrDefault(e => e.DepartmentId == depts[i].DepartmentId && e.EmployeeId == employee.employeeId) != null)
+                    {
+                        var employeeToModify = _context.Employees.FirstOrDefault(e => e.DepartmentId == depts[i].DepartmentId && e.EmployeeId == employee.employeeId);
+
+                        if (employeeToModify != null)
+                        {
+                            employeeToModify.DepartmentId = employee.departmentId;
+                            employeeToModify.FirstName = employee.firstName;
+                            employeeToModify.LastName = employee.lastName;
+                            employeeToModify.Position = employee.position;
+                            employeeToModify.Salary = employee.salary;
+                            _context.SaveChanges();
+                            return true;
+                        }
+
+                    }
+                }
+            }
+            return false;
         }
 
+        
 
         //DELETE A PRODUCT
         // DELETE api/<EmployeesController>/5

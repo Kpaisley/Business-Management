@@ -12,8 +12,10 @@ export const Employee = (props) => {
     function addEmployee() {
         var addModal = document.getElementById('add-employee-modal');
         var editModal = document.getElementById('edit-employee-modal');
+        var msg = document.getElementById('add-employee-msg');
         editModal.style.left = "-100%";
-        addModal.style.left = "25vw";
+        addModal.style.left = "20vw";
+        msg.innerHTML = "";
     }
 
     function closeModal() {
@@ -27,8 +29,10 @@ export const Employee = (props) => {
         props.setEmployeeToEdit(employee);
         var editModal = document.getElementById('edit-employee-modal');
         var addModal = document.getElementById('add-employee-modal');
+        var msg = document.getElementById('edit-employee-msg');
         addModal.style.left = "-100%";
-        editModal.style.left = "25vw";
+        editModal.style.left = "20vw";
+        msg.innerHTML = "";
     }
 
     if (!isAuthenticated) {
@@ -70,7 +74,7 @@ export const Employee = (props) => {
                         }
                     </select>
 
-                    <input className="submit-btn" type="submit" value="Add Department"></input>
+                    <input className="submit-btn" type="submit" value="Add Employee"></input>
                     <span id="add-employee-msg"></span>
                 </form>
             </div>

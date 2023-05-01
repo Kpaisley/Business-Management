@@ -410,6 +410,7 @@ const App = () => {
         msg.innerHTML = "Modifying Employee...";
 
         const employeeToModify = {
+            employeeId: employeeId,
             departmentId: e.target[4].value,
             firstName: e.target[0].value,
             lastName: e.target[1].value,
@@ -442,7 +443,30 @@ const App = () => {
         }
         else {
             try {
-                //Call API Here
+                const requestOptions = {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(employeeToModify)
+                }
+
+                const response = await fetch('employees/' + user.sub, requestOptions);
+                const data = await response.json();
+                console.log(data);
+                if (data == true) {
+                    msg.style.color = "limeGreen";
+                    msg.innerHTML = "Modified Successfully!"
+                    populateEmployees(user.sub);
+                    setEmployeeToEdit(employeeToModify);
+                    for (let i = 0; i < 5; i++) {
+                        e.target[i].value = "";
+                    }
+                }
+                else {
+
+                    msg.style.color = "red";
+                    msg.innerHTML = "Something went wrong..."
+                }
+                
             }
             catch {
                 msg.style.color = "red"
@@ -488,37 +512,6 @@ const App = () => {
         catch {
             console.log('Failed to populate employees.');
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //SET EMPLOYEES TO EMPTY ARRAY PREVENTS DUPLICATE EMPLOYEES BEING ADDED TO ARRAY.
-        /*setEmployees([]);*/
-
-        //try {
-        //    const response = await fetch('departments/' + companyID)
-        //    const data = await response.json();
-        //    for (let i = 0; i < data.length; i++) {
-        //        let departmentID = data[i].departmentId;
-        //        let res = await fetch('employees/' + departmentID);
-        //        let data2 = await res.json();
-        //        for (let x = 0; x < data2.length; x++) {
-        //            setEmployees(employees => [...employees, data2[x]])
-        //        }
-        //    }
-        //    setEmployeesLoading(false);
-        //} catch {
-        //    console.log('Failed to populate employees.')
-        //}
     }
 
 

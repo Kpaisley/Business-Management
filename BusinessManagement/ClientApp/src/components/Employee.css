@@ -28,7 +28,7 @@
 }
 
 #add-employee-modal, #edit-employee-modal {
-    position: absolute;
+    position: fixed;
     background-color: white;
     bottom: 8vh;
     width: 60vw;
