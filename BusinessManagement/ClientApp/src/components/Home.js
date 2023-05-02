@@ -8,24 +8,6 @@ export const Home = (props) => {
 
     
 
-    
-
-
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
     //RETURN HOMEPAGE IF NOT AUTHENTICATED
     if (!isAuthenticated) {
         return (

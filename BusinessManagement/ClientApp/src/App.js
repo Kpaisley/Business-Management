@@ -1,10 +1,8 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Counter } from './components/Counter';
 import { Department } from './components/Department';
 import { Employee } from './components/Employee';
-import { FetchData } from './components/FetchData';
 import { Home } from './components/Home';
 import { Layout } from './components/Layout';
 import { Product } from './components/Product';
@@ -529,10 +527,6 @@ const App = () => {
         <Routes>
                 <Route index="true" element={<Home products={products} productsLoading={productsLoading} departments={departments} departmentsLoading={departmentsLoading} employees={employees}
                     employeesLoading={employeesLoading} />} />
-
-                <Route path="/counter" element={<Counter employees={employees} />} />
-
-                <Route path="/fetch-data" element={<FetchData />} />
 
                 <Route path="/product" element={<Product products={products} productsLoading={productsLoading} changeQty={changeQty} deleteProduct={deleteProduct}
                     addProduct={addProduct} modifyProduct={modifyProduct} productToEdit={productToEdit} setProductToEdit={setProductToEdit} />} />

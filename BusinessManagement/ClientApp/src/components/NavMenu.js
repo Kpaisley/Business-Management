@@ -33,12 +33,6 @@ export const NavMenu = (props) => {
               <NavItem hidden={!isAuthenticated}>
                             <NavLink tag={Link} className="text-dark pulse-hover-sm" to="/employee">Employees</NavLink>
               </NavItem>
-              <NavItem hidden={!isAuthenticated}>
-                <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
-              </NavItem>
-              <NavItem hidden={!isAuthenticated}>
-                <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
-              </NavItem>
               <NavItem hidden={isAuthenticated}>
                             <NavLink tag={Link} className="text-dark pulse-hover-sm" to="/" onClick={() => loginWithRedirect()}>Login/Signup</NavLink>
               </NavItem>
